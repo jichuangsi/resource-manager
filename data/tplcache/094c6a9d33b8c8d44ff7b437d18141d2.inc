@@ -1,0 +1,1 @@
+<li><a href="mynews.php?aid=[field:aid /]">[field:title /]</a>

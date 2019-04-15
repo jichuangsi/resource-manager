@@ -1,0 +1,1 @@
+<li><span class='blue'>[field:uname/]</span> [field:title function="htmldecode(@me)/]</li>

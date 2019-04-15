@@ -1,0 +1,1 @@
+<li>【<a href="member/book_request_resp.php?reqid=[field:id/]">点击投稿</a>】 <span class='blue'>[field:uname/]</span> 发布了文档悬赏：[field:doctitle/]，悬赏积分：<span style="color:#F00; font-weight:bold;">[field:score/]</span></li>

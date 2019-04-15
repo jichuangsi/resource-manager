@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>论文库  /  任务书审核表_资源管理</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="/templets/2010_v1/style/common.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/list.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/reset.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/list_category.css" rel="stylesheet" type="text/css" />
+<!-- /公共js引用 开始 -->
+<script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="/include/dedeajax2.js"></script>
+<script language="javascript" type="text/javascript">
+function CheckLogin(){
+	var taget_obj = document.getElementById('_userlogin');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/member/ajax_loginsta.php");
+	DedeXHTTP = null;
+}
+jQuery().ready(function(){
+	CheckLogin();
+});
+</script>
+<!-- /公共js引用 结束-->
+<script language="javascript" type="text/javascript" src="/templets/2010_v1/js/jcarousellite.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	 $("#slideBar").jCarouselLite({
+		 btnNext: "#next",
+		 btnPrev: "#prev",
+		 auto: 15000,//停顿15秒
+		 speed: 3000,//滚动数度3秒
+		 visible: 6,
+		 scroll: 6//滚动步长6个
+	 });	 
+	 $("#l-content ul:first").addClass("block");
+});
+//选项卡
+function setTab(n){
+	var tli=document.getElementById("menu").getElementsByTagName("li");
+	var mli=document.getElementById("l-content").getElementsByTagName("ul");
+	for(i=0;i<tli.length;i++){
+		tli[i].className=i==n?"hover":"";
+		mli[i].style.display=i==n?"block":"none";
+	}
+}
+</script>
+<style type="text/css">
+.manu {
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-bottom: 3px;
+	margin: 3px;
+	padding-top: 3px;
+	text-align: center
+}
+.manu a {
+	border-right: #eee 1px solid;
+	padding-right: 5px;
+	border-top: #eee 1px solid;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #eee 1px solid;
+	color: #036cb4;
+	padding-top: 2px;
+	border-bottom: #eee 1px solid;
+	text-decoration: none
+}
+.manu a:hover {
+	border-right: #999 1px solid;
+	border-top: #999 1px solid;
+	border-left: #999 1px solid;
+	color: #666;
+	border-bottom: #999 1px solid
+}
+.manu a:active {
+	border-right: #999 1px solid;
+	border-top: #999 1px solid;
+	border-left: #999 1px solid;
+	color: #666;
+	border-bottom: #999 1px solid
+}
+.manu .current {
+	border-right: #036cb4 1px solid;
+	padding-right: 5px;
+	border-top: #036cb4 1px solid;
+	padding-left: 5px;
+	font-weight: bold;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #036cb4 1px solid;
+	color: #fff;
+	padding-top: 2px;
+	border-bottom: #036cb4 1px solid;
+	background-color: #036cb4
+}
+.manu .disabled {
+	border-right: #eee 1px solid;
+	padding-right: 5px;
+	border-top: #eee 1px solid;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #eee 1px solid;
+	color: #ddd;
+	padding-top: 2px;
+	border-bottom: #eee 1px solid
+}
+</style>
+</head><body>
+<div id="head_k">
+  <div class="headBox">
+    <div class="logo_k" id="logo_common"><a href="/"><img src="/templets/2010_v1/images/doc_logo.png" alt="资源管理"/></a></div>
+    <div class="quick_link" id="_userlogin"> <a href="/member/login.php">登录</a> <a href="/member/index_do.php?fmdo=user&dopost=regnew">注册</a> <a href="/" target="_blank">常见问题</a> </div>
+    <ul id="nav">
+      <li><a href="/"><span>首页</span></a></li>
+      
+      <li><a href='/docs/' ><span>论文库</span></a></li>
+      
+	  <li><a href="/book_reqlist.php"><span>任务悬赏</span></a></li>
+      <li><a href="/member/content_list.php?channelid=17"><span>我的论文</span></a></li>
+      <!--
+      <li><a href="/" class="on"><span>首页</span></a></li>
+      <li><a href="/" class=""><span>浏览文档</span></a></li>
+      <li><a href="/member/" class=""><span>我的文档</span></a></li>
+    -->
+      <!--
+      <li class="item"><a href="/member" class=""><span>小组</span></a></li>
+      <li class="channel"> <a class="ulblock" href="#">频道
+        <table>
+          <tr>
+            <td><ul>
+                <li><span>·</span><a>社区</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>校园</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>PPT</a></li>
+                <li><a href="/member" class="" target="_blank"><span>·</span>API</a></li>
+              </ul></td>
+          </tr>
+        </table>
+        </a> </li>
+       -->
+      <li class="upload"><a href="/member/upload_book.php"><span>我要上传</span></a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- /header -->
+<!-- /search 开始 -->
+<form action="/plus/search.php" method="get">
+  <input type="hidden" name="kwtype" value="0" />
+  <!--input type="hidden" name="searchtype" value="titlekeyword" />-->
+  <div class="searchBox" id="searchBox">
+    <div class="searchNew">
+      <div class="searchbar">
+        <input id="topsearch" type="text" maxlength="100" class='listTopDefault' name="keyword" onkeydown="if(event.keyCode==13){ return searchNew()}"/>
+        <select id="searchtype" name="searchtype">
+        	<option value="title">文档标题</option>
+            <option value="writer">文档上传者</option>
+            <option value="tag">文档标签</option>
+        </select>
+        <input type="submit" class="btn" value="搜索" onclick="return searchNew();" />
+        <!--a href="/plus/heightsearch.php" title="高级">高级</a--> </div>
+    </div>
+  </div>
+</form>
+<!-- /search 结束-->
+<!--content-->
+<div class="content">
+  <!--导航位置-->
+  <div class="position">当前位置： <a href='http://www.jzdxs.cn:4567/'>资源管理</a> > <a href='/docs/'>论文库</a> > <a href='/docs/pinpaituiguang/'>任务书审核表</a> > </div>
+  <!--导航位置 end-->
+  <!--left-->
+  <div class="left">
+	<div class="cate-frm">
+      <div class="directory">
+        <div class="catetitle">文档分类</div>
+        <div id="leftsidebar">
+          <ul>
+          
+            <li><a href="/docs/loushu_huace/">计算机论文</a></li>
+           
+            <li><a href="/docs/shichangguihua/">电子类论文</a></li>
+           
+            <li><a href="/docs/dichanyingxiao/">管理类论文</a></li>
+           
+            <li><a href="/docs/VI_sheji/">计算机毕业设计</a></li>
+           
+            <li><a href="/docs/yuanlinguihua/">电子类毕业设计</a></li>
+           
+            <li><a href="/docs/jingpinguanggaowenan/">开题报告</a></li>
+           
+            <li><a href="/docs/pinpaituiguang/">任务书审核表</a></li>
+           
+            <li><a href="/docs/pinpaituiguang/">旅游类论文</a></li>
+           
+            <li><a href="/docs/jiaoyuleilunwen/">其他毕业论文</a></li>
+           
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <!--下载排行-->
+    <div class="l-list" >
+      <div class="l-top" id="rotate">
+        <ul class="ui-tabs-nav" id="menu">
+          <li class="hover"><a href="javascript:setTab(0);" >日</a></li>
+          <li><a href="javascript:setTab(1);">周</a></li>
+          <li><a href="javascript:setTab(2);">月</a></li>
+        </ul>
+        文档阅读TOP10 </div>
+      <div class="l-content" style="*padding-top:0px;" id="l-content">
+        <ul id='fragment-1'>
+          
+        </ul>
+        <ul id='fragment-2' style='display:none;'>
+          
+        </ul>
+        <ul id='fragment-3' style='display:none;'>
+          
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--下载排行 end-->
+    <!--赚钱排行-->
+    <div class="l-list">
+      <div class="l-top"> 会员排行榜 </div>
+      <div class="l-content">
+        <div class="m-title"><span class='topName'>用户名</span><span class='all'>文档数</span><span class="sy">总积分</span></div>
+        <ul id="moneyTop">
+          
+          <li class='r1'><span class='top10'>1</span> <a href='/member/index.php?uid=hgfjdk' class='topName' target='_blank'>风飘</a> <span class='all'> 0</span> <span class='red'>1254</span></li>
+          <li><span class='top10'>2</span> <a href='/member/index.php?uid=tanyu' class='topName' target='_blank'>心酸</a> <span class='all'> 0</span> <span class='red'>650</span></li>
+          <li class='r1'><span class='top10'>3</span> <a href='/member/index.php?uid=ASDF' class='topName' target='_blank'>ASDF</a> <span class='all'>43</span> <span class='red'>562</span></li>
+          <li><span class='top10'>4</span> <a href='/member/index.php?uid=天空记忆' class='topName' target='_blank'>天空记忆</a> <span class='all'> 0</span> <span class='red'>468</span></li>
+          <li class='r1'><span class='top10'>5</span> <a href='/member/index.php?uid=6268862' class='topName' target='_blank'>郑辉</a> <span class='all'> 0</span> <span class='red'>340</span></li>
+          <li><span class='top10'>6</span> <a href='/member/index.php?uid=zhangyunzhou' class='topName' target='_blank'>大千</a> <span class='all'> 0</span> <span class='red'>336</span></li>
+          <li class='r1'><span class='top10'>7</span> <a href='/member/index.php?uid=sflying' class='topName' target='_blank'>笑世一郎</a> <span class='all'> 0</span> <span class='red'>290</span></li>
+          <li><span class='top10'>8</span> <a href='/member/index.php?uid=hewei2010' class='topName' target='_blank'>hewei2010</a> <span class='all'> 0</span> <span class='red'>270</span></li>
+          <li class='r1'><span class='top10'>9</span> <a href='/member/index.php?uid=admin' class='topName' target='_blank'>admin</a> <span class='all'>17</span> <span class='red'>245</span></li>
+          <li><span class='top10'>10</span> <a href='/member/index.php?uid=wisageteche' class='topName' target='_blank'>wisageteche</a> <span class='all'> 0</span> <span class='red'>240</span></li>
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--赚钱排行 end-->
+    <!--系统标签-->
+    <div class="l-list">
+      <div class="l-top">系统标签</div>
+      <div class="l-content tips"> <a href='/tags.php?/.doc/'>.doc</a>  <a href='/tags.php?/%E8%AF%B4%E6%98%8E/'>说明</a>  <a href='/tags.php?/%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88/'>实施方案</a>  <a href='/tags.php?/%E6%96%87%E6%A1%A3/'>文档</a>  <a href='/tags.php?/%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6/'>管理软件</a>  <a href='/tags.php?/%E9%97%AE%E9%A2%98/'>问题</a>  <a href='/tags.php?/%E7%BF%A1%E7%BF%A0/'>翡翠</a>  <a href='/tags.php?/%E4%BF%AE%E6%94%B9/'>修改</a>  <a href='/tags.php?/%E5%8C%97%E6%AC%A7/'>北欧</a>  <a href='/tags.php?/%E6%B5%B7%E5%B2%B8/'>海岸</a>  <a href='/tags.php?/%E8%99%8E%E9%97%A8/'>虎门</a>  <a href='/tags.php?/%E6%B1%9F%E5%8D%97/'>江南</a>  <a href='/tags.php?/%E8%BF%9B%E5%85%A5/'>进入</a>  <a href='/tags.php?/%E4%B8%80%E5%A5%97/'>一套</a>  <a href='/tags.php?/%E5%AE%8C%E6%95%B4/'>完整</a>  <a href='/tags.php?/%E4%B8%AD%E6%96%87/'>中文</a>  <a href='/tags.php?/%E5%B8%82%E5%9C%BA/'>市场</a>  <a href='/tags.php?/%E6%B5%81%E7%A8%8B/'>流程</a>  <a href='/tags.php?/%E7%94%B5%E8%84%91/'>电脑</a>  <a href='/tags.php?/%E6%B2%9F%E9%80%9A/'>沟通</a> </div>
+      <div class="l-end"></div>
+    </div>
+    <!--系统标签 end-->
+  </div>
+  <!--left end-->
+  <!--right-->
+  <div class="right">
+    <!--best document-->
+    <!--div class="best" style="display:">
+      <div class="prev"><a href="javascript:;" id="prev"></a></div>
+      <div class="slider">
+        <div id="slideBar">
+          <ul>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="next"><a href="javascript:;" id="next"></a> </div>
+      <div class="clear"></div>
+    </div-->
+    <!--best document end-->
+    <!--doc list-->
+    <div class="sort"><span class="list_inf">“<b class="red">任务书审核表</b>”的文档列表</span> </div>
+    <div class="doc_list">  </div>
+    <!--doc list end-->
+
+    <div id="showpage"  style="background-color:#FFF;">
+      <div class="manu">
+      <span class="pageinfo">共 <strong>0</strong>页<strong>0</strong>条记录</span>
+
+      <!--
+       <a href="./other_1_tcl_203_1.html">首页</a> <span class="disabled">上一页</span> <span class="current">1</span> <a href="./other_1_tcl_203_2.html">2</a> <a href="./other_1_tcl_203_3.html">3</a> <a href="./other_1_tcl_203_4.html">4</a> <a href="./other_1_tcl_203_5.html">5</a> <a href="./other_1_tcl_203_6.html">6</a> <a href="./other_1_tcl_203_7.html">7</a> <a href="./other_1_tcl_203_8.html">8</a> <a href="./other_1_tcl_203_9.html">9</a> <a href="./other_1_tcl_203_10.html">10</a> <a href="./other_1_tcl_203_2.html">下一页</a> <a href="./other_1_tcl_203_1880.html">末页</a>-->
+      </div>
+    </div>
+  </div>
+  <!--right end-->
+  <div class="clear"></div>
+</div>
+<!--content end-->
+<!-- //底部模板 -->
+
+<div id="foot_k" style="display: none;">
+  <ul>
+    <li>
+      <dl>
+        <dt>关于我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>使用须知</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>99论文</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>联系我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>论文定制</dt>
+      </dl>
+    </li>
+     <li>
+      <dl>
+        <dt>版权申述</dt>
+      </dl>
+    </li>
+  </ul>
+  <p class="copy" >©2005-2011 www.99lw.net Inc. All Rights Reserved </p> 
+
+  <script type="text/javascript" src="/twatch_log.js"></script>
+</div>
+
+<!-- /footer -->
+</body>
+</html>

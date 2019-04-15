@@ -1,0 +1,87 @@
+第一章
+oracle 甲骨文公司
+database 数据库
+system 方法
+varchar 可变长度字符串
+number 数字
+union 联合
+intersect 交集
+minus 减去
+developer 开发者
+truncate 缩短
+
+
+第二章
+tablespace 表空间
+user 用户
+identity 身份
+grant 承认
+revoke 撤回
+sequence 顺序
+synonym 同义词
+index 索引
+unique 唯一的
+reverse 倒转
+range 范围
+interval 间隔
+
+
+第三章
+declare 声明
+exception 反对
+others 其他的
+raise 举起
+cursor 游标
+loop 圈
+fetch 取
+procedure 程序
+
+
+第四章
+Hibernate 冬眠
+dialect 方言
+schema 计划
+generator 生产者
+native 本地的
+identity 身份
+assigned指定的
+configuration 布局
+
+
+第五章
+query 问题
+language 语言
+parameter 参数
+property 特性
+list 目录
+iterate 重复
+unique 唯一的
+result 结果
+
+
+第六章
+bag 袋
+inverse 相反的
+cascade 层叠的
+lazy 懒惰的
+proxy 代表权
+
+
+第七章
+fetch 吸引
+annotation 注释
+entity 实体
+generated 发电的
+persistence 持久的
+transient 短暂的
+strategy 策略
+generation 产生
+allocation 分配
+initial 开始的
+
+
+
+
+
+
+

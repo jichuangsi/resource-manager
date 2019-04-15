@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:xn="http://www.renren.com/2009/xnml" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{dede:global.cfg_webname/}</title>
+<meta name="description" content="{dede:global.cfg_description/}" />
+<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+<link href="{dede:global.cfg_templets_skin/}/style/common.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/index.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/reset.css" rel="stylesheet" type="text/css" />
+<!-- /公共js引用 开始 -->
+{dede:include filename="comm_js.htm"/}
+<!-- /公共js引用 结束-->
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/jquery.marquee.js"></script>
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/jcarousellite.js"></script>
+<script language="javascript" type="text/javascript">
+/**
+jQuery().ready(function(){
+	jQuery.ajax({
+		url: '{dede:global.cfg_cmspath/}/member/ajax_islogin.php',
+		success: function(data) {
+			if(data == "1"){
+				
+			}else{
+				jQuery("div .loginbox_new").show();	
+			}
+		}
+	});
+});
+*/
+</script>
+<script language="javascript" type="text/javascript">
+//取今日文档上传数
+function gettodaycount(){
+	//$("#todayuploadcount").html("213123")
+}
+//选项卡
+function setTab(n){
+	var tli=document.getElementById("menu").getElementsByTagName("li");
+	var mli=document.getElementById("l-content").getElementsByTagName("ul");
+	for(i=0;i<tli.length;i++){
+		tli[i].className=i==n?"hover":"";
+		mli[i].style.display=i==n?"block":"none";
+	}
+}
+
+$(document).ready(function() { 
+	gettodaycount();
+	$("#marquee").marquee({  
+            direction: "up",  
+            step: 1,  
+			speed:30,
+            pause: 5000  
+    }); 
+	$("#upUl").marquee({  
+            direction: "up",  
+            step: 1,  
+			speed:100,
+            pause: 0  
+    });
+	
+	$("#slideBar").jCarouselLite({
+		btnNext: "#next",
+		btnPrev: "#prev",
+		auto: 15000,
+		speed: 3000,
+		visible: 6,
+		scroll: 6
+	});
+	$("#l-content ul:first").addClass("block");
+});
+</script>
+</head>
+<body>
+<!-- /header 开始 -->
+{dede:include filename="head.htm"/}
+<!-- /header 结束-->
+<!-- /search 开始 -->
+{dede:include filename="top_search.htm"/}
+<!-- /search 结束-->
+<!--Real-time start-->
+<div id="Real-time" >
+  <div class="RT_title">
+    <div class="RT_l"><b>网站指数</b></div>
+    <div class="RT_m">
+      <ul>
+        <li class="price">文档浏览量↑</li>
+        <li class="num">文档下载量↑</li>
+        <li class="reg">注册用户数↑</li>
+        <li class="adddoc">新增文档↑</li>
+        <li class="adduser">有收入者↑</li>
+      </ul>
+    </div>
+    <div class="RT_r"></div>
+  </div>
+  <div id="marquee" class="clear">
+    <ul>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>今日新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>{dede:sql sql="select doc_click as c from t_sys_statistics where data_date = CURDATE()"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='num'>{dede:sql sql="select doc_down as c from t_sys_statistics where data_date = CURDATE()"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='reg'>{dede:sql sql="select reg_user as c from t_sys_statistics where data_date = CURDATE()"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+            <div class='adddoc'>{dede:sql sql="select new_doc as c from t_sys_statistics where data_date = CURDATE()"}[field:c function="null2zero(@me)/]篇{/dede:sql}</div>
+            <div class='adduser'>{dede:sql sql="select new_income as c from t_sys_statistics where data_date = CURDATE()"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>昨日新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>{dede:sql sql="select doc_click as c from t_sys_statistics where data_date = CURDATE()-1"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='num'>{dede:sql sql="select doc_down as c from t_sys_statistics where data_date = CURDATE()-1"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='reg'>{dede:sql sql="select reg_user as c from t_sys_statistics where data_date = CURDATE()-1"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+            <div class='adddoc'>{dede:sql sql="select new_doc as c from t_sys_statistics where data_date = CURDATE()-1"}[field:c function="null2zero(@me)/]篇{/dede:sql}</div>
+            <div class='adduser'>{dede:sql sql="select new_income as c from t_sys_statistics where data_date = CURDATE()-1"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>一月新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>{dede:sql sql="select sum(doc_click) as c from t_sys_statistics where data_date > CURDATE()-30"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='num'>{dede:sql sql="select sum(doc_down) as c from t_sys_statistics where data_date > CURDATE()-30"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='reg'>{dede:sql sql="select sum(reg_user) as c from t_sys_statistics where data_date > CURDATE()-30"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+            <div class='adddoc'>{dede:sql sql="select sum(new_doc) as c from t_sys_statistics where data_date > CURDATE()-30"}[field:c function="null2zero(@me)/]篇{/dede:sql}</div>
+            <div class='adduser'>{dede:sql sql="select sum(new_income) as c from t_sys_statistics where data_date > CURDATE()-30"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>半年新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>{dede:sql sql="select sum(doc_click) as c from t_sys_statistics where data_date > CURDATE()-183"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='num'>{dede:sql sql="select sum(doc_down) as c from t_sys_statistics where data_date > CURDATE()-183"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='reg'>{dede:sql sql="select sum(reg_user) as c from t_sys_statistics where data_date > CURDATE()-183"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+            <div class='adddoc'>{dede:sql sql="select sum(new_doc) as c from t_sys_statistics where data_date > CURDATE()-183"}[field:c function="null2zero(@me)/]篇{/dede:sql}</div>
+            <div class='adduser'>{dede:sql sql="select sum(new_income) as c from t_sys_statistics where data_date > CURDATE()-183"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>一年新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>{dede:sql sql="select sum(doc_click) as c from t_sys_statistics where data_date > CURDATE()-365"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='num'>{dede:sql sql="select sum(doc_down) as c from t_sys_statistics where data_date > CURDATE()-365"}[field:c function="null2zero(@me)/]次{/dede:sql}</div>
+            <div class='reg'>{dede:sql sql="select sum(reg_user) as c from t_sys_statistics where data_date > CURDATE()-365"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+            <div class='adddoc'>{dede:sql sql="select sum(new_doc) as c from t_sys_statistics where data_date > CURDATE()-365"}[field:c function="null2zero(@me)/]篇{/dede:sql}</div>
+            <div class='adduser'>{dede:sql sql="select sum(new_income) as c from t_sys_statistics where data_date > CURDATE()-365"}[field:c function="null2zero(@me)/]人{/dede:sql}</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="RT_end clear" ><img src="{dede:global.cfg_templets_skin/}/images/RT_end.gif" width="960" height="8" /></div>
+</div>
+<!--Real-time end-->
+<div class="content">
+  <!--left part-->
+  <div class="left">
+    <!--banner-->
+    <div class="banner" style="display: none;">
+      <div class="upload_tarea"> 今日上传<span class="amount" id="todayuploadcount"><script src="{dede:global name='cfg_phpurl'/}/todaynewbooks.php" language="javascript"></script></span>份文档 <a href="{dede:global.cfg_memberurl/}/upload_book.php" class="upload"> </a> </div>
+    </div>
+    <!--banner end-->
+    <!--best document-->
+    <div class="best">
+      <div class="prev"><a href="javascript:;" id="prev"></a></div>
+      <div class="slider">
+        <div id="slideBar">
+          <ul>
+            {dede:arclist row=14 titlelen=32 noflag='h' imgwidth=70 imgheight=86}
+            <li> <a href="[field:arcurl/]">[field:image/]</a>
+              <p>[field:title/]</p>
+            </li>
+            {/dede:arclist}
+          </ul>
+        </div>
+      </div>
+      <div class="next"><a href="javascript:;" id="next"></a> </div>
+      <div class="clear"></div>
+    </div>
+    <!--best document end-->
+<script src='/docshare/plus/ad_js.php?aid=1' language='javascript'></script>
+
+    <!--list-->
+    <div class="list_part">
+      <div class="title"><span class="t">最新文档</span><span  class="more"></span></div>
+      <div class="listContent_new">
+        <ul>
+          {dede:arclist row=7 titlelen=32 noflag='h' imgwidth=40 imgheight=50 addfields='filetype' channelid=17}
+          <li><span class="update red">[field:pubdate function="GetDateMk(@me)"/]</span> <a href="[field:arcurl/]" class="[field:filetype/]" target="_blank">[field:title/]</a></li>
+          {/dede:arclist}
+        </ul>
+      </div>
+    </div>
+    
+    <!--栏目列表-->
+    {dede:channelartlist typeid=17 col=1}
+    <div class="list_part">
+      <div class="title"><span class="t">{dede:field name='typename'/}</span><span  class="more"><a href="{dede:field name='typeurl'/}" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          {dede:arclist row=7 titlelen=32 noflag='h' imgwidth=40 imgheight=50 addfields='filetype' channelid=17}
+          <li><span class="update">[field:pubdate function="GetDateMk(@me)"/]</span> <a href="[field:arcurl/]" class="[field:filetype/]" target="_blank">[field:title/]</a></li>
+          {/dede:arclist}
+        </ul>
+      </div>
+    </div>
+    {/dede:channelartlist}
+     <!--栏目列表 end-->
+     
+    <div  class="clear"></div>
+    <!--list end-->
+    
+    <!--tips start-->
+    <div id="tips" style="margin-top:-8px;">
+      {dede:myad name='index_buttom_pic'/}
+    </div>
+    <!--tips end-->
+
+	
+	 
+     <!--links start-->
+    <div id="links">
+      <div class="tab">
+        <div class="tab_l"><img src="{dede:global.cfg_templets_skin/}/images/tab_l.gif" width="4" height="29" /></div>
+        <div class="tab_m">友情链接</div>
+        <div class="tab_r"><img src="{dede:global.cfg_templets_skin/}/images/tab_r.gif" width="4" height="29" /></div>
+      </div>
+      <div class="tab_c index_link">
+		{dede:flink row='24'/}
+	  </div>
+      <div class="tab_end"><img src="{dede:global.cfg_templets_skin/}/images/tab_end.gif" width="685" height="4" /></div>
+    </div>
+    <!--links end-->
+  </div>
+  <!--left part end-->
+  <!--right part-->
+  <div class="right">
+    <!--news start-->
+    <div id="news">
+      <div class="tab">
+        <div class="tab_l"><img src="{dede:global.cfg_templets_skin/}/images/tab_l.gif" width="4" height="29" /></div>
+        <div class="tab_m"><span><a href="list-mynews.php" target="_blank">更多>></a></span>公告</div>
+        <div class="tab_r"><img src="{dede:global.cfg_templets_skin/}/images/tab_r.gif" width="4" height="29" /></div>
+      </div>
+      <ul class="n_content">
+        {dede:mynews row='5' titlelen='40'}
+        <li><a href="mynews.php?aid=[field:aid /]">[field:title /]</a> {/dede:mynews}
+      </ul>
+      <div class="n_end"><span></span></div>
+    </div>
+    <!--news end-->
+    <!--网站动态 start-->
+    <div id="zhike">
+      <div class="z_title">大家都在...</div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          {dede:sql sql='select * from t_member_feed order by dtime desc limit 0,20'}
+              <li><span class='blue'>[field:uname/]</span> [field:title function="htmldecode(@me)/]</li>
+		  {/dede:sql}
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="{dede:global.cfg_templets_skin/}/images/z_end.gif"/></div>
+    </div>
+    <br />
+    <!--网站动态 end-->
+    
+    <!--最新悬赏任务-->
+    <div id="zhike" style="position:relative;">
+      <div class="z_title">最新悬赏<span style="position:relative; left:130px;"><a href="{dede:global.cfg_cmsurl/}/member/book_request.php">更多>></a></span></div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          {dede:sql sql="select a.id, a.mid, a.doctitle, a.score, a.validate, a.addtime, b.userid, b.uname from t_member_request a, t_member b where a.mid = b.mid order by a.id desc limit 0, 10"}
+              <li>【<a href="member/book_request_resp.php?reqid=[field:id/]">点击投稿</a>】 <span class='blue'>[field:uname/]</span> 发布了文档悬赏：[field:doctitle/]，悬赏积分：<span style="color:#F00; font-weight:bold;">[field:score/]</span></li>
+		  {/dede:sql}
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="{dede:global.cfg_templets_skin/}/images/z_end.gif"/></div>
+    </div>
+    <br />
+    <!--最新悬赏任务 end-->
+    
+    <!--最新提现-->
+    <div id="zhike">
+      <div class="z_title">最新提现</div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          {dede:sql sql="select a.mid, a.money, a.rmb, a.addtime, b.userid, b.uname from t_member_benefit a, t_member b where a.mid = b.mid order by a.id desc limit 0, 10"}
+              <li><span class='blue'>[field:uname/]</span>于[[field:addtime/]]申请提现人民币￥<span style="color:#F00; font-weight:bold;">[field:rmb/]</span>，花费金币：[field:money/]</li>
+		  {/dede:sql}
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="{dede:global.cfg_templets_skin/}/images/z_end.gif"/></div>
+    </div>
+    <!--最新提现 end-->
+    
+    <!--下载排行-->
+    <div class="l-list" >
+      <div class="l-top" id="rotate">
+        <ul class="ui-tabs-nav" id="menu">
+          <li class="hover"><a href="javascript:setTab(0);" >日</a></li>
+          <li><a href="javascript:setTab(1);">周</a></li>
+          <li><a href="javascript:setTab(2);">月</a></li>
+        </ul>
+        文档阅读TOP10 </div>
+      <div class="l-content" style="*padding-top:0px;" id="l-content">
+        <ul id='fragment-1'>
+          {dede:arclist sort='hot' subday='1' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+        <ul id='fragment-2' style='display:none;'>
+          {dede:arclist sort='hot' subday='7' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+        <ul id='fragment-3' style='display:none;'>
+          {dede:arclist sort='hot' subday='30' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--下载排行 end-->
+    <!--赚钱排行-->
+    <div class="l-list">
+      <div class="l-top"> 会员积分排行 </div>
+      <div class="l-content">
+        <div class="m-title"><span class='topName'>用户名</span><span class='all'>文档数</span><span class="sy">总积分</span></div>
+        <ul id="moneyTop">
+       {dede:sql sql="Select mid,userid,uname,face,scores,(select count(1) from t_archives where mid = m.mid)docnumber From t_member m order by scores desc limit 0,10"}
+       [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global]
+    <a href='[field:global name="cfg_cmspath"/]/member/index.php?uid=[field:userid/]' class='topName' target='_blank'>[field:uname/]</a> <span class='all'>[field:docnumber function="null2zero(@me)"/]</span> <span class='red'>[field:scores/]</span></li>
+        {/dede:sql}
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--赚钱排行 end-->
+
+  </div>
+  <!--right part end-->
+  <div class="clear"></div>
+</div>
+<!-- /foot 开始 -->
+{dede:include filename="footer.htm"/}
+<!-- /foot 结束-->
+</body>
+</html>

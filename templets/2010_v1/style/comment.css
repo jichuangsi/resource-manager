@@ -1,0 +1,253 @@
+#feedback {
+	border-top:1px dotted #ccc
+}
+#feedback ol {
+	padding:0;
+	margin:10px;
+	list-style:none
+}
+#feedback li {
+	line-height:20px;
+	word-break:break-all;
+}
+#feedback #form {
+	margin-left:36px;
+	line-height:20px;
+	padding:0;
+	margin-bottom:5px;
+	font-size:14px
+}
+#feedback #msg {
+	word-break:break-all;
+	border:1px solid #666666;
+}
+#feedback .nb {
+	height:16px;
+	border:1px solid #666666;
+	padding:1px;
+}
+p.poster {
+	margin:5px 0;
+	background:#f2f6fb;
+	padding-left:5px;
+	color:#666
+}
+p.post {
+	padding-left:36px;
+	margin:0;
+	font-size:12px;
+	color:#000
+}
+.dcmp-title {
+	line-height:25px;
+}
+.dcmp-title strong {
+	color:#444;
+	font-weight:normal;
+}
+.dcmp-title small {
+	font-size:12px;
+	color:#999999;
+}
+.dcmp-stand {
+	float:right;
+	margin-top:-18px;
+	position:relative;
+	clear:both;
+	color:#999;
+}
+.dcmp-stand strong {
+	font-weight:normal;
+	color:#444;
+}
+.dcmp-stand input {
+	margin-right:2px;
+}
+.dcmp-stand img {
+	vertical-align:middle;
+	margin-right:2px;
+}
+.dcmp-mood {
+	height:25px;
+	width:98%;
+	overflow:hidden;
+	clear:both;
+	padding-top:12px;
+}
+.dcmp-mood strong {
+	float:left;
+	color:#444;
+	font-weight:normal;
+	line-height:25px;
+}
+.dcmp-mood ul {
+	float:left;
+}
+.dcmp-mood ul li {
+	float:left;
+	margin-right:8px;
+}
+.dcmp-mood ul li input, .dcmp-mood ul li img {
+	vertical-align:middle;
+	margin-right:4px;
+ *margin-right:0px;
+}
+.dcmp-content {
+	padding-top:8px;
+}
+.dcmp-content textarea {
+	width:96%;
+	height:60px;
+}
+.dcmp-post .dcmp-submit {
+	float:left;
+	padding-top:6px;
+}
+.dcmp-post .dcmp-submit input, .dcmp-post .dcmp-submit button {
+	vertical-align:middle;
+}
+.dcmp-post .dcmp-submit button {
+	width:80px;
+	height:25px;
+	border:none;
+	background:url(../images/btn-bg2.gif) no-repeat;
+	line-height:25px;
+	letter-spacing:1px;
+	overflow:hidden;
+	color:#444;
+	cursor:pointer;
+	margin-left:5px;
+}
+.dcmp-post {
+	height:35px;
+	overflow:hidden;
+	clear:both;
+	color:#444;
+}
+.dcmp-post .dcmp-userinfo {
+	float:left;
+	margin-right:6px;
+}
+.dcmp-post .dcmp-userinfo input {
+	height:13px;
+	padding-right:0px;
+}
+.dcmp-post .dcmp-userinfo input, .dcmp-post .dcmp-userinfo img {
+	vertical-align:middle;
+	margin:5px;
+}
+.decmt-box .decmt-title {
+	line-height:19px;
+	color:#999;
+	font-family:Tahoma;
+}
+.decmt-box .decmt-title span {
+	margin-right:2px;
+	vertical-align:middle;
+}
+.decmt-box .decmt-title .moodico {
+	height:18px;
+	width:18px;
+	display:inline-block;
+}
+.decmt-box .decmt-title .username {
+	color:#669;
+}
+.decmt-box .decmt-title .username a {
+	color:#669;
+}
+.decmt-box .decmt-title .username a:hover {
+	text-decoration:none;
+	color:#690;
+}
+.decmt-box .decmt-title .ip {
+	color:#669;
+	font-size:11px;
+}
+.decmt-box .decmt-title .date {
+	color:#555;
+	font-size:11px;
+}
+.decmt-box .decmt-act {
+	float:right;
+	margin-top:-18px;
+	padding-right:10px;
+	position:relative;
+	clear:both;
+	color:#999;
+}
+.decmt-box .decmt-act span {
+	margin-right:7px;
+}
+.decmt-box .decmt-act span a {
+	color:#888;
+}
+.decmt-box .decmt-content {
+	color:#555;
+	line-height:21px;
+	clear:both;
+	width:99%;
+	margin:2px auto 0px;/*	background:url(../images/ico-comment-quote.gif) 0px 4px no-repeat;
+	text-indent:18px;*/
+}
+.decmt-box .decmt-content img {
+	vertical-align:middle;
+}
+.decmt-content .decmt-box, .decmt-box .decmt-box {
+	background:#FFE;
+	border:1px solid #CCC;
+	margin:6px auto;
+}
+.decmt-box .decmt-box .decmt-title {
+	text-indent:4px;
+}
+.decmt-box .decmt-box .decmt-content {
+	color:#555;
+}
+.decmt-box {
+	width:98%;
+	padding:6px 5px;
+	margin:0px auto;
+	overflow:hidden;
+	clear:both;
+}
+.decmt-box span.fr {
+	float:right;
+}
+.decmt-box span.title {
+	float:left;
+	line-height:20px;
+	width:90%;
+}
+.decmt-box ul {
+}
+.decmt-box ul li {
+	width:100%;
+	border-bottom:1px dashed #ccc;
+	padding-bottom:10px;
+	overflow:hidden;
+}
+.decmt-box ul li a.plpic {
+	float:left;
+	width:40px;
+	height:40px;
+	padding:2px;
+	border:1px solid #DFD9B9;
+	background:#F9FDED;
+	margin-right:5px;
+	overflow:hidden;
+}
+.decmt-box ul li p {
+	float:left;
+	width:630px;
+	line-height:22px;
+}
+.decmt-box .comment_act {
+	float:left;
+	width:90%;
+	line-height:20px;
+	color:#aeaeae;
+}
+.decmt-box .comment_act a {
+	color:#aeaeae;
+}

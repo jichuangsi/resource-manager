@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={dede:global.cfg_soft_lang/}" />
+<title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description' function='html2text(@me)'/}" />
+<link href="{dede:global.cfg_templets_skin/}/style/common.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/index.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/list.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/reset.css" rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/list_category.css" rel="stylesheet" type="text/css" />
+<!-- /公共js引用 开始 -->
+{dede:include filename="comm_js.htm"/}
+<!-- /公共js引用 结束-->
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/jcarousellite.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	 $("#slideBar").jCarouselLite({
+		 btnNext: "#next",
+		 btnPrev: "#prev",
+		 auto: 15000,//停顿15秒
+		 speed: 3000,//滚动数度3秒
+		 visible: 6,
+		 scroll: 6//滚动步长6个
+	 });	 
+	 $("#l-content ul:first").addClass("block");
+});
+//选项卡
+function setTab(n){
+	var tli=document.getElementById("menu").getElementsByTagName("li");
+	var mli=document.getElementById("l-content").getElementsByTagName("ul");
+	for(i=0;i<tli.length;i++){
+		tli[i].className=i==n?"hover":"";
+		mli[i].style.display=i==n?"block":"none";
+	}
+}
+</script>
+<style type="text/css">
+.manu {
+	padding-right: 3px;
+	padding-left: 3px;
+	padding-bottom: 3px;
+	margin: 3px;
+	padding-top: 3px;
+	text-align: center
+}
+.manu a {
+	border-right: #eee 1px solid;
+	padding-right: 5px;
+	border-top: #eee 1px solid;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #eee 1px solid;
+	color: #036cb4;
+	padding-top: 2px;
+	border-bottom: #eee 1px solid;
+	text-decoration: none
+}
+.manu a:hover {
+	border-right: #999 1px solid;
+	border-top: #999 1px solid;
+	border-left: #999 1px solid;
+	color: #666;
+	border-bottom: #999 1px solid
+}
+.manu a:active {
+	border-right: #999 1px solid;
+	border-top: #999 1px solid;
+	border-left: #999 1px solid;
+	color: #666;
+	border-bottom: #999 1px solid
+}
+.manu .current {
+	border-right: #036cb4 1px solid;
+	padding-right: 5px;
+	border-top: #036cb4 1px solid;
+	padding-left: 5px;
+	font-weight: bold;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #036cb4 1px solid;
+	color: #fff;
+	padding-top: 2px;
+	border-bottom: #036cb4 1px solid;
+	background-color: #036cb4
+}
+.manu .disabled {
+	border-right: #eee 1px solid;
+	padding-right: 5px;
+	border-top: #eee 1px solid;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	margin: 2px;
+	border-left: #eee 1px solid;
+	color: #ddd;
+	padding-top: 2px;
+	border-bottom: #eee 1px solid
+}
+</style>
+</head><body>
+{dede:include filename="head.htm"/}
+<!-- /header -->
+<!-- /search 开始 -->
+{dede:include filename="top_search.htm"/}
+<!-- /search 结束-->
+<!--content-->
+<div class="content">
+  <!--导航位置-->
+  <div class="position">当前位置：{dede:field name='position'/}</div>
+  <!--导航位置 end-->
+  <!--left-->
+  <div class="left">
+    <div class="cate-frm">
+      <div class="directory">
+        <div class="catetitle">文档分类</div>
+        <div id="leftsidebar">
+          <ul>
+          {dede:channel typeid=17 type='son'}
+            <li><a href="[field:typelink/]">[field:typename/]</a></li>
+           {/dede:channel}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <!--下载排行-->
+    <div class="l-list" >
+      <div class="l-top" id="rotate">
+        <ul class="ui-tabs-nav" id="menu">
+          <li class="hover"><a href="javascript:setTab(0);" >日</a></li>
+          <li><a href="javascript:setTab(1);">周</a></li>
+          <li><a href="javascript:setTab(2);">月</a></li>
+        </ul>
+        文档阅读TOP10 </div>
+      <div class="l-content" style="*padding-top:0px;" id="l-content">
+        <ul id='fragment-1'>
+          {dede:arclist sort='hot' subday='1' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+        <ul id='fragment-2' style='display:none;'>
+          {dede:arclist sort='hot' subday='7' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+        <ul id='fragment-3' style='display:none;'>
+          {dede:arclist sort='hot' subday='30' titlelen=42 row=6}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a title="[field:title/]" href="[field:arcurl/]">[field:title/]</a> </li>
+          {/dede:arclist}
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--下载排行 end-->
+    <!--赚钱排行-->
+    <div class="l-list">
+      <div class="l-top">会员排行榜 </div>
+      <div class="l-content">
+        <div class="m-title"><span class='topName'>用户名</span><span class='all'>文档数</span><span class="sy">总积分</span></div>
+        <ul id="moneyTop">
+          {dede:sql sql="Select mid,userid,uname,face,scores,(select count(1) from t_archives where mid = m.mid)docnumber From t_member m order by scores desc limit 0,10"}
+          [field:global runphp='yes' name=autoindex]
+          $a="
+          <li class='r1'><span class='top10'>";
+            $b="</span>";
+            $c="
+          <li><span class='top10'>";
+            if (@me % 2 == 1) @me = $a.@me.$b;
+            else @me = $c.@me.$b;
+            [/field:global] <a href='[field:global name="cfg_cmspath"/]/member/index.php?uid=[field:userid/]' class='topName' target='_blank'>[field:uname/]</a> <span class='all'>[field:docnumber function="null2zero(@me)"/]</span> <span class='red'>[field:scores/]</span></li>
+          {/dede:sql}
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--赚钱排行 end-->
+    <!--系统标签-->
+    <div class="l-list">
+      <div class="l-top">系统标签</div>
+      <div class="l-content tips">{dede:tag row='20' getall='1' sort='month'} <a href='[field:link/]'>[field:tag /]</a> {/dede:tag}</div>
+      <div class="l-end"></div>
+    </div>
+    <!--系统标签 end-->
+  </div>
+  <!--left end-->
+  <!--right-->
+  <div class="right">
+    <!--best document-->
+    <div class="best" style="display:">
+      <div class="prev"><a href="javascript:;" id="prev"></a></div>
+      <div class="slider">
+        <div id="slideBar">
+          <ul>
+            {dede:arclist flag='c' titlelen=42 row=20 imgwidth=70 imgheight=86}
+            <li><a href="[field:arcurl/]">[field:image/]
+              <p>[field:title/]</p>
+              </a></li>
+            {/dede:arclist}
+          </ul>
+        </div>
+      </div>
+      <div class="next"><a href="javascript:;" id="next"></a> </div>
+      <div class="clear"></div>
+    </div>
+    <!--best document end-->
+    <!--文档分类-->
+    <div class="docClasstitle">文档分类</div>
+    <div class="docClass">
+      <ul>
+        <li> {dede:channel currentstyle="<span><a href='~typelink~' class='thisclass'>~typename~</a></span>"} <span><a href='[field:typeurl/]'>[field:typename/]</a></span>{/dede:channel}</li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <!--文档分类 end-->
+    <!--栏目列表-->
+    {dede:channelartlist}
+    <div class="list_part">
+      <div class="title"><span class="t">{dede:field name='typename'/}</span><span  class="more"><a href="{dede:field name='typeurl'/}" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          {dede:arclist row=7 titlelen=32 noflag='h' imgwidth=40 imgheight=50 addfields='filetype' channelid=17}
+          <li><span class="update">[field:pubdate function="GetDateMk(@me)"/]</span> <a href="[field:arcurl/]" target="_blank" class="[field:filetype/]">[field:title/]</a></li>
+          {/dede:arclist}
+        </ul>
+      </div>
+    </div>
+    {/dede:channelartlist}
+    <!--栏目列表 end-->
+  </div>
+  <!--right end-->
+  <div class="clear"></div>
+</div>
+<!--content end-->
+{dede:include filename="footer.htm"/}
+<!-- /footer -->
+</body>
+</html>

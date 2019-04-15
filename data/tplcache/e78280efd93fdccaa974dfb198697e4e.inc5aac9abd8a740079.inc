@@ -1,0 +1,6 @@
+<?php
+$z[0]=Array("link"," /uploads/userup/107/1554a13M-44N.doc ",0,93);
+$z[0][4]['islocal']="1";
+$z[0][4]['text']="本地下载";
+
+?>

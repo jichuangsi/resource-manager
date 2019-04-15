@@ -1,0 +1,82 @@
+[hduser@node1 hadoop]$ hadoop fs -ls /
+18/03/05 03:19:59 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hduser supergroup          0 2018-03-05 00:17 /input2
+drwxr-xr-x   - hduser supergroup          0 2018-03-05 00:39 /op2
+drwx------   - hduser supergroup          0 2018-03-05 00:20 /tmp
+[hduser@node1 hadoop]$ hadoop fs -mkdir /input3
+18/03/05 03:20:26 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[hduser@node1 hadoop]$ hadoop fs -ls /
+18/03/05 03:20:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 4 items
+drwxr-xr-x   - hduser supergroup          0 2018-03-05 00:17 /input2
+drwxr-xr-x   - hduser supergroup          0 2018-03-05 03:20 /input3
+drwxr-xr-x   - hduser supergroup          0 2018-03-05 00:39 /op2
+drwx------   - hduser supergroup          0 2018-03-05 00:20 /tmp
+[hduser@node1 hadoop]$ hadoop fs -put /home/hduser/file/test*.txt /input3/
+18/03/05 03:21:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[hduser@node1 hadoop]$ hadoop fs -ls /input3
+18/03/05 03:22:01 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   2 hduser supergroup        118 2018-03-05 03:21 /input3/test1.txt
+-rw-r--r--   2 hduser supergroup        120 2018-03-05 03:21 /input3/test2.txt
+[hduser@node1 hadoop]$ hadoop fs -get /input3/test*.txt $HOME/file
+18/03/05 03:24:29 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/home/hduser/file/test1.txt': File exists
+get: `/home/hduser/file/test2.txt': File exists
+[hduser@node1 hadoop]$ hadoop fs -get /input3/test* $HOME/file
+18/03/05 03:24:44 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/home/hduser/file/test1.txt': File exists
+get: `/home/hduser/file/test2.txt': File exists
+[hduser@node1 hadoop]$ hadoop fs -get /input3/test1 $HOME/file
+18/03/05 03:25:00 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input3/test1': No such file or directory
+[hduser@node1 hadoop]$ bin/hadoop fs -get /input3/test1 $HOME/file
+18/03/05 03:27:10 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input3/test1': No such file or directory
+[hduser@node1 hadoop]$ hadoop fs -ls /input3
+18/03/05 03:27:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   2 hduser supergroup        118 2018-03-05 03:21 /input3/test1.txt
+-rw-r--r--   2 hduser supergroup        120 2018-03-05 03:21 /input3/test2.txt
+[hduser@node1 hadoop]$ hadoop fs -get /input3/test1 /home/hduser/file
+18/03/05 03:29:19 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input3/test1': No such file or directory
+[hduser@node1 hadoop]$ bin/hadoop fs -get /input3/test1 /home/hduser/file
+18/03/05 03:29:39 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input3/test1': No such file or directory
+[hduser@node1 hadoop]$ hadoop fs -get /input2/file1 $HOME/file
+18/03/05 03:31:01 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input2/file1': No such file or directory
+[hduser@node1 hadoop]$ ^C
+[hduser@node1 hadoop]$ hadoop fs -ls /input3
+18/03/05 03:31:36 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   2 hduser supergroup        118 2018-03-05 03:21 /input3/test1.txt
+-rw-r--r--   2 hduser supergroup        120 2018-03-05 03:21 /input3/test2.txt
+[hduser@node1 hadoop]$ su root 
+密码：
+[root@node1 hadoop]# hadoop fs -get /input3/test1 /home/hduser/file
+18/03/05 03:32:11 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/input3/test1': No such file or directory
+[root@node1 hadoop]# hadoop fs -get /input2/file1.txt /home/hduser/file
+18/03/05 03:32:33 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+get: `/home/hduser/file/file1.txt': File exists
+[root@node1 hadoop]# ^C
+[root@node1 hadoop]# hadoop fs -get /input3/test1.txt /home/hduser/file
+18/03/05 03:33:11 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[root@node1 hadoop]# hadoop fs -cat file:///home/hduser/test1.txt
+18/03/05 03:40:25 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+cat: `file:///home/hduser/test1.txt': No such file or directory
+[root@node1 hadoop]# hadoop fs -cat /input3/test1.txt
+18/03/05 03:41:15 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+song1   singer1  man   slow
+song2   singer2  man2   slow2
+song3   singer3  man3   slow3
+song4   singer4  man4   slow4
+[root@node1 hadoop]# hadoop fs -ls /input3
+18/03/05 03:42:12 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   2 hduser supergroup        118 2018-03-05 03:21 /input3/test1.txt
+-rw-r--r--   2 hduser supergroup        120 2018-03-05 03:21 /input3/test2.txt
+[root@node1 hadoop]# 

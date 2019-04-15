@@ -1,0 +1,1 @@
+<li><span class='blue'>[field:uname/]</span>于[[field:addtime/]]申请提现人民币￥<span style="color:#F00; font-weight:bold;">[field:rmb/]</span>，花费金币：[field:money/]</li>

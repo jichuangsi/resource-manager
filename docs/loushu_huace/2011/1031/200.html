@@ -1,0 +1,716 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xn="http://www.renren.com/2009/xnml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基于BS模式的售房管理系统的设计与开发.doc_资源管理</title>
+<meta name="keywords" content="设计,开发,.doc,管理系统,售房,BS,模式,基于," />
+<meta name="description" content="基于BS模式的售房管理系统的设计与开发.doc" />
+<link href="/templets/2010_v1/style/common.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/article.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/comment.css" rel="stylesheet" type="text/css" />
+<!-- /公共js引用 开始 -->
+<script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="/include/dedeajax2.js"></script>
+<script language="javascript" type="text/javascript">
+function CheckLogin(){
+	var taget_obj = document.getElementById('_userlogin');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/member/ajax_loginsta.php");
+	DedeXHTTP = null;
+}
+jQuery().ready(function(){
+	CheckLogin();
+});
+</script>
+<!-- /公共js引用 结束-->
+<script language="javascript" type="text/javascript" src="/templets/2010_v1/js/jquery.marquee.js"></script>
+<script type="text/javascript" src="/templets/2010_v1/js/opendoc/js/thickbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/templets/2010_v1/js/opendoc/css/thickbox.css"/>
+<script type="text/javascript">
+	var tb_pathToImage = "/images/loadingAnimation.gif";
+</script>
+<script src="/templets/2010_v1/js/jquery.hiAlerts.1.0/jquery.ui.draggable.js" type="text/javascript"></script>
+<!-- 拖动函数，不需要可以去掉 -->
+<!-- Core files -->
+<script src="/templets/2010_v1/js/jquery.hiAlerts.1.0/jquery.hiAlerts-min.js" type="text/javascript"></script>
+<link href="/templets/2010_v1/js/jquery.hiAlerts.1.0/jquery.hiAlerts.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#marquee").marquee({  
+		direction: "left",  
+		step: 1,  
+		pause: 1000  
+	});					   
+});
+
+function CheckCommentLogin(){
+	var taget_obj = document.getElementById('_ajax_feedback');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/member/ajax_feedback.php");
+	DedeXHTTP = null;
+}
+function postBadGood(ftype,fid)
+{
+	var taget_obj = document.getElementById(ftype+fid);
+	var saveid = GetCookie('badgoodid');
+	if(saveid != null)
+	{
+		var saveids = saveid.split(',');
+		var hasid = false;
+		saveid = '';
+		j = 1;
+		for(i=saveids.length-1;i>=0;i--)
+		{
+			if(saveids[i]==fid && hasid) continue;
+			else {
+				if(saveids[i]==fid && !hasid) hasid = true;
+				saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+				j++;
+				if(j==10 && hasid) break;
+				if(j==9 && !hasid) break;
+			}
+		}
+		if(hasid) { alert('您刚才已表决过了喔！'); return false;}
+		else saveid += ','+fid;
+		SetCookie('badgoodid',saveid,1);
+	}
+	else
+	{
+		SetCookie('badgoodid',fid,1);
+	}
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/plus/feedback.php?aid="+fid+"&action="+ftype+"&fid="+fid);
+}
+function postDigg(ftype,aid)
+{
+	var taget_obj = document.getElementById('vote');
+	var saveid = GetCookie('diggid');
+	if(saveid != null)
+	{
+		var saveids = saveid.split(',');
+		var hasid = false;
+		saveid = '';
+		j = 1;
+		for(i=saveids.length-1;i>=0;i--)
+		{
+			if(saveids[i]==aid && hasid) continue;
+			else {
+				if(saveids[i]==aid && !hasid) hasid = true;
+				saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+				j++;
+				if(j==20 && hasid) break;
+				if(j==19 && !hasid) break;
+			}
+		}
+		if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+		else saveid += ','+aid;
+		SetCookie('diggid',saveid,1);
+	}
+	else
+	{
+		SetCookie('diggid',aid,1);
+	}
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	var url = "/plus/digg_ajax.php?action="+ftype+"&id="+aid;
+	myajax.SendGet2(url);
+}
+function getDigg(aid)
+{
+	var taget_obj = document.getElementById('newdigg');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/plus/digg_ajax.php?id="+aid);
+	DedeXHTTP = null;
+}
+//登录
+function winLogin(userid, pwd, vdcode, todo){
+	$.ajax({
+		url: '/member/login_ajax.php',
+		method:"post",
+		data: {vdcode:vdcode, userid:userid, pwd:pwd},
+		dataType:   "script",
+		success	:function(response) {
+			var obj = eval("("+response+")");//转换为json对象
+			if(obj.code == 0){
+				tb_remove();
+				CheckLogin();
+				doSomeThing(todo);
+			}else{
+				hiAlert("<div style='text-align:left;'>"+obj.msg+"</div>");
+			}
+		}
+	});
+}
+
+function doSomeThing(todo){
+	if(todo == "down"){
+		doDonwLoad();
+	}else if(todo == "favorite"){
+		doFavorite();
+	}
+}
+
+function reguser(){
+	window.location.href = "/member/index_do.php?fmdo=user&dopost=regnew";	
+}
+
+function showLogin(todo){
+	$('#DocinViewer').css('visibility','hidden');
+	tb_show('用户登录','/templets/2010_v1/inc/showLogin.php?TB_iframe=true&todo='+todo+'&height=160;width=400');
+}
+
+function favorite(){
+	$.ajax({
+		url: '/member/ajax_islogin.php',
+		dataType:   "script",
+		success	:function(data) {
+			if(data=='0'){
+				showLogin("favorite");
+			}else{
+				doFavorite();
+			}
+		}
+	});
+}
+
+function download(){
+	$.ajax({
+		url: '/member/ajax_islogin.php',
+		dataType:   "script",
+		success	:function(data) {
+			if(data=='0'){
+				showLogin("down");
+			}else{
+				doDonwLoad();
+			}
+		}
+	});
+}
+
+function doDonwLoad(){
+	hiConfirm('<div style="text-align:left;">文档名称：【基于BS模式的售房管理系统的设计与开发.doc】<br/>文档大小：【0.44 MB】<br/>所需金币：【<span style="color:red; font-weight:bold;">5</span>】，确定下载吗？</div>', '文档下载确认：', function(r) {
+		//hiOverAlert('你的反馈是: ' + r);
+		if(r){
+			$('#DocinViewer').css('visibility','visible');
+			window.location.href = "/plus/download.php?open=2&id=200&uhash=615ce16890bf9a4e5deea596";
+		}
+	});
+}
+
+function doFavorite(){
+	window.location.href = "/plus/stow.php?aid=200";
+}
+</script>
+<script type="text/javascript" src="/templets/2010_v1/js/swfobject.js" ></script>
+<script type="text/javascript">
+	if(window.addEventListener)
+	window.addEventListener('DOMMouseScroll', handleWheel, false);
+	window.onmousewheel = document.onmousewheel = handleWheel;
+	
+	if (window.attachEvent) 
+	window.attachEvent("onmousewheel", handleWheel);
+	
+	function handleWheel(event){
+		try{
+			if(!window.document.FlexPaperViewer.hasFocus()){return true;}
+			window.document.FlexPaperViewer.setViewerFocus(true);
+			window.document.FlexPaperViewer.focus();
+			
+			if(navigator.appName == "Netscape"){
+				if (event.detail)
+					delta = 0;
+				if (event.preventDefault){
+					event.preventDefault();
+					event.returnValue = false;
+					}
+			}
+			return false;	
+		}catch(err){return true;}		
+	}
+</script>
+<script type="text/javascript"> 
+	<!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
+	var swfVersionStr = "9.0.124";
+	<!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+	var xiSwfUrlStr = "${expressInstallSwf}";
+	var flashvars = { 
+		  aid : "200",
+		  cmsUrl : "",
+		  Scale : 0.6, 
+		  ZoomTransition : "easeOut",
+		  ZoomTime : 0.5,
+		  ZoomInterval : 0.1,
+		  FitPageOnLoad : false,
+		  FitWidthOnLoad : true,
+		  PrintEnabled : false,
+		  FullScreenAsMaxWindow : false,
+		  ProgressiveLoading : true,
+		  localeChain: "en_US"
+		  };
+	 var params = {
+		
+		}
+	params.quality = "high";
+	params.bgcolor = "#ffffff";
+	params.allowscriptaccess = "sameDomain";
+	params.allowfullscreen = "true";
+	var attributes = {};
+	attributes.id = "FlexPaperViewer";
+	attributes.name = "FlexPaperViewer";
+	swfobject.embedSWF(
+		"/templets/2010_v1/js/FlexPaperViewer.swf", "flashContent", 
+		"685", "530", 
+		swfVersionStr, xiSwfUrlStr, 
+		flashvars, params, attributes);
+	swfobject.createCSS("#flashContent", "display:block;text-align:left;");	
+</script>
+</head><body>
+	  
+<!-- /header 开始 -->
+<div id="head_k">
+  <div class="headBox">
+    <div class="logo_k" id="logo_common"><a href="/"><img src="/templets/2010_v1/images/doc_logo.png" alt="资源管理"/></a></div>
+    <div class="quick_link" id="_userlogin"> <a href="/member/login.php">登录</a> <a href="/member/index_do.php?fmdo=user&dopost=regnew">注册</a> <a href="/" target="_blank">常见问题</a> </div>
+    <ul id="nav">
+      <li><a href="/"><span>首页</span></a></li>
+      
+      <li><a href='/docs/' ><span>论文库</span></a></li>
+      
+	  <li><a href="/book_reqlist.php"><span>任务悬赏</span></a></li>
+      <li><a href="/member/content_list.php?channelid=17"><span>我的论文</span></a></li>
+      <!--
+      <li><a href="/" class="on"><span>首页</span></a></li>
+      <li><a href="/" class=""><span>浏览文档</span></a></li>
+      <li><a href="/member/" class=""><span>我的文档</span></a></li>
+    -->
+      <!--
+      <li class="item"><a href="/member" class=""><span>小组</span></a></li>
+      <li class="channel"> <a class="ulblock" href="#">频道
+        <table>
+          <tr>
+            <td><ul>
+                <li><span>·</span><a>社区</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>校园</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>PPT</a></li>
+                <li><a href="/member" class="" target="_blank"><span>·</span>API</a></li>
+              </ul></td>
+          </tr>
+        </table>
+        </a> </li>
+       -->
+      <li class="upload"><a href="/member/upload_book.php"><span>我要上传</span></a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- /header 结束-->
+<div id="container">
+  <div id="left">
+    <!--文档预览 start-->
+    <div id="Preview" class="p_box">
+      <div class="title" style="border-bottom:0px;"><span class="doc"><img src='/templets/2010_v1/images/productView-doc_46x35.gif'   align='absmiddle' style='display:block; float:left;'>
+        <h1>基于BS模式的售房管理系统的设计与开发.doc<span id="pagenumber">36页</span> </h1>
+        <h2 id="ids">本文档一共被下载200： <span class="red">
+          <script src="/plus/disdls.php?aid=200" language="javascript"></script>
+          次</span></h2>
+        <ul id="v-toolbar">
+          <li id="v-toolbar-download"><a href="javascript:download();"><img src="/templets/2010_v1/images/donwloaddoc.png" width="53" height="38" alt="支付并下载" /></a></li>
+          <li id="v-toolbar-favorite"><a href="javascript:favorite();"><img src="/templets/2010_v1/images/favdoc.png" width="53" height="38" alt="收藏该文档" /></a></li>
+        </ul>
+        </span> </div>
+      <div class="tl_b"></div>
+      <div class="tr_b"></div>
+    </div>
+    <!--doc-player-->
+    <div>
+      <div class="doc-player" id="DocinViewer" style="display: none;">
+        <div id="flashContent">
+          <!--<p> 显示该文档阅读器需要flash player的版本为10.0.124或更高！ </p>
+          <script type="text/javascript"> 
+					var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
+					document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+									+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+				</script>-->
+			<!--<iframe src="/bookswfs/1320039295-X51.pdf"></iframe>-->
+			
+        </div>
+      </div>
+      <!--<embed :src="/bookswfs/1320039295-X51.pdf" type="application/pdf" width="350px" height="100%">-->
+      	 <!--<iframe src="/bookswfs/1555246292-1L8.pdf" width="100%" height="350px"></iframe>-->
+      	<embed src="/bookswfs/1320039295-X51.pdf" type="application/pdf" width="100%" height="500px">
+    </div>
+    <!--doc-player end-->
+    <!--文档预览 end-->
+    <!--文档简介 start-->
+    <div id="Intro" class="p_box" style="margin-top:0; border-top-width:0;">
+      <div class="text" id="docInfo">文档简介</div>
+      <div class="content">
+        <div class="docInfo">
+          <div class="infoList">
+            <ul>
+              <li><strong>上传作者</strong>：梅梅</li>
+              <li><strong>上传时间</strong>：2011-10-31</li>
+              <li><strong>需要金币</strong>：<span class="red">5</span></li>
+              <li><strong>浏览人气</strong>：
+                <script src="/plus/count.php?view=yes&aid=200&mid=102" type='text/javascript' language="javascript"></script>
+              </li>
+              <li><strong>下载次数</strong>：
+                <script src="/plus/disdls.php?aid=200" language="javascript"></script>
+              </li>
+              <li><strong>收藏次数</strong>：
+                <script src="/plus/disstows.php?aid=200" language="javascript"></script>
+              </li>
+            </ul>
+            <p><strong>文档路径</strong>：<a href='http://www.jzdxs.cn:4567/'>资源管理</a> > <a href='/docs/'>论文库</a> > <a href='/docs/loushu_huace/'>计算机论文</a> > </p>
+          </div>
+          <div id="loadings" style="display:none"></div>
+          <div class="vote" id="vote">
+            <div class='good'><a href="javascript:postDigg('good',200)" >
+              <p>这个文档不错</p>
+              <div class='bar'>
+                <div id='g_img' style='width:0%'></div>
+              </div>
+              <span class='barnum'>0%(0)</span></a></div>
+            <div class='bad'><a href="javascript:postDigg('bad',200)" >
+              <p>文档有待改进</p>
+              <div class='bar'>
+                <div id='b_img' style='width:0%'></div>
+              </div>
+              <span class='barnum'>0%(0)</span></a></div>
+          </div>
+          <div class="clear"></div>
+          <div class="downloaded"><strong>下载过该文档的会员</strong>：
+            <script src="/plus/bookdownloadusers.php?aid=200" language="javascript"></script>
+          </div>
+        </div>
+        <div id="viewcontent"> 基于BS模式的售房管理系统的设计与开发.doc </div>
+        <div id="view"></div>
+        <div class="tags"><img src="/templets/2010_v1/images/ico-tags.png" width="16" height="16" alt="标签" />自定义标签：  <a href='/tags.php?/.doc/'>.doc</a> <a href='/tags.php?/%E5%9F%BA%E4%BA%8E/'>基于</a> <a href='/tags.php?/BS/'>BS</a> <a href='/tags.php?/%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/'>管理系统</a> <a href='/tags.php?/%E6%A8%A1%E5%BC%8F/'>模式</a> <a href='/tags.php?/%E5%BC%80%E5%8F%91/'>开发</a> <a href='/tags.php?/%E8%AE%BE%E8%AE%A1/'>设计</a> <a href='/tags.php?/%E5%94%AE%E6%88%BF/'>售房</a><br>
+        </div>
+        <div class="prenext"> 上一篇：<a href='/docs/loushu_huace/2011/1031/199.html'>车友会管理系统设计与实现.doc</a> <br>
+          下一篇：<a href='/docs/loushu_huace/2011/1031/201.html'>消防信息管理系统.doc</a> </div>
+      </div>
+      <div class="prenext"></div>
+    </div>
+    <!--文档简介 end-->
+    <!--下载地址 start-->
+    <div class="p_box" id="download" style="margin-bottom:10px;">
+      <div class="text">下载地址</div>
+      <div class="download">
+        <div><img src="/templets/2010_v1/images/Point_ico.gif" width="14" height="14"align="absmiddle" /> 需要金币：5 &nbsp;&nbsp; <img  src="/templets/2010_v1/images/bugreport.png" align="absmiddle"/><a href="/plus/erraddsave.php?aid=200&title=基于BS模式的售房管理系统的设计与开发.doc" class="red">文档纠错</a> &nbsp;&nbsp;<img  src="/templets/2010_v1/images/ctrl_d.gif" align="absmiddle"/><a href="/plus/stow.php?aid=200">收藏文档</a> &nbsp;&nbsp;<img src="/templets/2010_v1/images/help.png" align="absmiddle"/><a href="#">下载帮助</a></div>
+        <a href="javascript:download();"><img src="/templets/2010_v1/images/download.gif" width="146" height="44" alt="支付并下载" /></a> </div>
+    </div>
+    <!--下载地址 end-->
+    <!--该用户其它文档 start-->
+    <div  id='others' class='p_box'>
+      <div class='text'>该用户其它文档</div>
+      <div class='rollBox' id='marquee'>
+        <ul>
+          <li> <a href="/docs/loushu_huace/2011/1031/202.html"> <img src='/uploads/allimg/132003bQ-1M9.jpg' width='46' height='55'>
+            <p>基于BS的师生信息交流系统.doc</p>
+            </a></li><li> <a href="/docs/loushu_huace/2011/1031/197.html"> <img src='/uploads/allimg/132003V27-Yb.jpg' width='46' height='55'>
+            <p>医药公司进销存管理系统.doc</p>
+            </a></li><li> <a href="/docs/loushu_huace/2011/1031/200.html"> <img src='/uploads/allimg/1320039295-X51.jpg' width='46' height='55'>
+            <p>基于BS模式的售房管理系统的设计与开发.doc</p>
+            </a></li><li> <a href="/docs/loushu_huace/2011/1031/201.html"> <img src='/uploads/allimg/1320039D2-S32.jpg' width='46' height='55'>
+            <p>消防信息管理系统.doc</p>
+            </a></li><li> <a href="/docs/loushu_huace/2011/1031/199.html"> <img src='/uploads/allimg/132003W04-2b4.jpg' width='46' height='55'>
+            <p>车友会管理系统设计与实现.doc</p>
+            </a></li><li> <a href="/docs/loushu_huace/2011/1031/198.html"> <img src='/uploads/allimg/132003VX-5240.jpg' width='46' height='55'>
+            <p>基于ASP的网上书店的设计与实现.doc</p>
+            </a></li>
+        </ul>
+      </div>
+    </div>
+    <!--该用户其它文档 end-->
+    <!--发表评论 start-->
+    <div id="Comment_box" class="p_box">
+      <div class='text'>发表评论<span style="float:right"><a href="/plus/feedback.php?aid=200">进入详细评论页</a></span></div>
+      <!-- //AJAX评论区 -->
+      <!--评论 begin-->
+<div id="feedback" class="doc-info-r">
+  <p>
+  <form action="#" method="post" name="feedback">
+    <input type="hidden" name="dopost" value="send" />
+    <input type="hidden" name="comtype" value="comments">
+    <input type="hidden" name="aid" value="200" />
+    <input type="hidden" name="fid" id='feedbackfid' value="0" />
+    <div class="dcmp-title"> <small>请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。</small> </div>
+    <!-- /dcmp-title -->
+    <!--div class="dcmp-stand"> <strong>评价:</strong>
+            <input type="radio" name="feedbacktype" checked="checked" value="feedback" id="dcmp-stand-neu" />
+            <label for="dcmp-stand-neu"><img src="/templets/2010_v1/images/cmt-neu.gif" />中立</label>
+            <input type="radio" name="feedbacktype" value="good" id="dcmp-stand-good" />
+            <label for="dcmp-stand-good"><img src="/templets/2010_v1/images/cmt-good.gif" />好评</label>
+            <input type="radio" name="feedbacktype" value="bad" id="dcmp-stand-bad" />
+            <label for="dcmp-stand-bad"><img src="/templets/2010_v1/images/cmt-bad.gif" />差评</label>
+          </div-->
+    <!-- /dcmp-stand -->
+    <div class="dcmp-content">
+      <textarea cols="60" name="msg" rows="5" class="ipt-txt"></textarea>
+    </div>
+    <!-- /dcmp-content -->
+    <div class="clr"></div>
+    <div class="dcmp-post">
+      <!--未登陆-->
+      <div class="dcmp-userinfo" id="_ajax_feedback"> 用户名:
+        <input type="text" name="username" size="16" class="ipt-txt" />
+        
+        验证码:
+        <input type="text" name="validate" size="4" class="ipt-txt" style="text-transform:uppercase;"/>
+        <img src= "/include/vdimgck.php" id="validateimg" style="cursor:pointer" onclick="this.src=this.src+'?'" width="60" height="24"  title="点击我更换图片" alt="点击我更换图片" />
+        <input type="checkbox" name="notuser" id="dcmp-submit-guest" />
+        <label for="dcmp-submit-guest" />
+        匿名?
+        </label>
+      </div>
+      
+      <script language="javascript" type="text/javascript">CheckCommentLogin();</script>
+      
+      <div class="dcmp-submit">
+        <button type="button" onClick='PostComment()'>发表评论</button>
+      </div>
+    </div>
+  </form>
+  </p>
+</div>
+<!--评论 end-->
+<!--最新评论-->
+<div id="feedback" class="doc-info-r">
+  <!-- //这两个ID的区块必须存在，否则JS会出错 -->
+  <div id='commetcontentNew'></div>
+  <div id='commetcontent'></div>
+</div>
+<!--最新评论 end-->
+<!--
+//由于评论载入时使用异步传输，因此必须在最后一步加载（DIGG和评论框须放在评论内容前面）
+//如果一定需要提前的把myajax.SendGet改为myajax.SendGet2，但可能会引起页面阻滞
+-->
+<script language='javascript'>
+function LoadCommets(page)
+{
+		var taget_obj = document.getElementById('commetcontent');
+		var waithtml = "<div style='line-height:50px'><img src='/images/loadinglit.gif' />评论加载中...</div>";
+		var myajax = new DedeAjax(taget_obj, true, true, '', 'x', waithtml);
+		myajax.SendGet2("/plus/feedback_ajax.php?dopost=getlist&aid=200&page="+page);
+		DedeXHTTP = null;
+}
+function PostComment()
+{
+		var f = document.feedback;
+		var nface = '6';
+		var nfeedbacktype = 'feedback';
+		var nvalidate = '';
+		var nnotuser = '';
+		var nusername = '';
+		var npwd = '';
+		var taget_obj = $DE('commetcontentNew');
+		var waithtml = "<div style='line-height:30px'><img src='/images/loadinglit.gif' />正在发送中...</div>";
+		if(f.msg.value=='')
+		{
+			alert("评论内容不能为空！");
+			return;
+		}
+		if(f.validate)
+		{
+			if(f.validate.value=='') {
+				alert("请填写验证码！");
+				return;
+			}
+			else {
+				nvalidate = f.validate.value;
+			}
+		}
+		if(f.msg.value.length > 500)
+		{
+			alert("你的评论是不是太长了？请填写500字以内的评论。");
+			return;
+		}
+		if(f.feedbacktype) {
+			for(var i=0; i < f.feedbacktype.length; i++)
+				if(f.feedbacktype[i].checked) nfeedbacktype = f.feedbacktype[i].value;
+		}
+		if(f.face) {
+			for(var j=0; j < f.face.length; j++)
+				if(f.face[j].checked) nface = f.face[j].value;
+		}
+		if(f.notuser.checked) nnotuser = '1';
+		if(f.username) nusername = f.username.value;
+		if(f.pwd) npwd = f.pwd.value;
+		
+		var myajax = new DedeAjax(taget_obj, false, true, '', '', waithtml);
+		myajax.sendlang = 'utf-8';
+		myajax.AddKeyN('dopost', 'send');
+		myajax.AddKeyN('aid', '200');
+		myajax.AddKeyN('fid', f.fid.value);
+		myajax.AddKeyN('face', nface);
+		myajax.AddKeyN('feedbacktype', nfeedbacktype);
+		myajax.AddKeyN('validate', nvalidate);
+		myajax.AddKeyN('notuser', nnotuser);
+		myajax.AddKeyN('username', nusername);
+		myajax.AddKeyN('pwd', npwd);
+		myajax.AddKeyN('msg', f.msg.value);
+		myajax.SendPost2('/plus/feedback_ajax.php');
+		f.msg.value = '';
+		f.fid.value = 0;
+		if(f.validate)
+		{
+			if($DE('validateimg')) $DE('validateimg').src = "/include/vdimgck.php?"+f.validate.value;
+			f.validate.value = '';
+		}
+}
+function quoteCommet(fid)
+{
+	document.feedback.fid.value = fid;
+}
+LoadCommets(1);
+</script>
+<!-- //评论内容区结束 -->
+ </div>
+    <!--发表评论 end-->
+  </div>
+  <div id="right">
+    <!--文档上传者 start-->
+    <div id="UpAuthor" class="g_box">
+      <div class="title">文档上传者</div>
+      <div class="content">
+        <div class="AuthorImg" id="AuthorImg"><a href="/member/index.php?uid=吴小梅" class="userface"><img src="/member/templets/images/dfboy.png" width="52" height="52" /></a></div>
+        <div class="AuthorInfo" id="AuthorInfo">用户：<a href='/member/index.php?uid=吴小梅' class="username">梅梅</a><br />
+          总文档：6<br />
+          <span class='hour'>2011-10-31 13:10</div>
+      </div>
+      <div class="tl_b"></div>
+      <div class="tr_b"></div>
+      <div class="bl_b"></div>
+      <div class="br_b"></div>
+    </div>
+    <!--文档上传者 end-->
+    <!--相关文档 start-->
+    <div id="re_data" class="g_box">
+      <div class="title">相关文档</div>
+      <div class="content"> <ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0415/259.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0415/259.html">上传测试.docx</a></div>
+            <a href='#'>admin</a> 2019-04-15 10:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0415/255.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0415/255.html">123.docx</a></div>
+            <a href='#'>ASDF</a> 2019-04-15 02:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0415/254.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0415/254.html">test.docx</a></div>
+            <a href='#'>admin</a> 2019-04-15 00:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/253.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/253.html">测试.doc</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 20:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/252.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/252.html">测试.doc</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 20:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/243.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/243.html">上传测试.docx</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 16:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/242.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/242.html">新建 Microsoft Office Word 20</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 16:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/241.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/241.html">新建 Microsoft Office Word 20</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 16:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/240.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/240.html">上传测试.docx</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 16:04分享 <br />
+          </li>
+        </ul>
+<ul>
+          <li class='re_img'><a href="/docs/loushu_huace/2019/0414/239.html"><img src='/images/defaultpic.gif' width='46' height='55'></a></li>
+          <li class='re_inf'>
+            <div class='re_title'>&nbsp;<a href="/docs/loushu_huace/2019/0414/239.html">新建 Microsoft Office Word 20</a></div>
+            <a href='#'>ASDF</a> 2019-04-14 16:04分享 <br />
+          </li>
+        </ul>
+ </div>
+      <div class="tl_b"></div>
+      <div class="tr_b"></div>
+      <div class="bl_b"></div>
+      <div class="br_b"></div>
+    </div>
+    <!--相关文档 end-->
+  </div>
+  <div class="clear"></div>
+</div>
+﻿
+<!-- /foot 开始 -->
+<!-- //底部模板 -->
+
+<div id="foot_k" style="display: none;">
+  <ul>
+    <li>
+      <dl>
+        <dt>关于我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>使用须知</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>99论文</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>联系我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>论文定制</dt>
+      </dl>
+    </li>
+     <li>
+      <dl>
+        <dt>版权申述</dt>
+      </dl>
+    </li>
+  </ul>
+  <p class="copy" >©2005-2011 www.99lw.net Inc. All Rights Reserved </p> 
+
+  <script type="text/javascript" src="/twatch_log.js"></script>
+</div>
+
+<!-- /foot 结束-->
+</body>
+</html>

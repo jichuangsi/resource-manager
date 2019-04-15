@@ -1,0 +1,1 @@
+<li><a href='mynews.php?aid=[field:aid /]'>[field:title /]</a> （发布时间：[field:senddate function="GetDateMk(@me)/]，发布人：[field:writer /]）</li>

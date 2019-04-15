@@ -1,0 +1,36 @@
+<div id="head_k">
+  <div class="headBox">
+    <div class="logo_k" id="logo_common"><a href="{dede:global.cfg_cmsurl/}/"><img src="{dede:global.cfg_templets_skin/}/images/doc_logo.gif" alt="{dede:global.cfg_webname/}"/></a></div>
+    <div class="quick_link" id="_userlogin"> <a href="{dede:global.cfg_memberurl/}/login.php">登录</a> <a href="{dede:global.cfg_memberurl/}/index_do.php?fmdo=user&dopost=regnew">注册</a> <a href="{dede:global.cfg_cmsurl/}/" target="_blank">常见问题</a> </div>
+    <ul id="nav">
+      <li><a href="{dede:global.cfg_cmsurl/}/"><span>首页</span></a></li>
+      {dede:channel type='top' row='10' currentstyle="<li><a class='on' href='~typelink~' ~rel~><span>~typename~</span></a></li>"}
+      <li><a href='[field:typeurl/]' [field:rel/]><span>[field:typename/]</span></a></li>
+      {/dede:channel}
+	  <li><a href="{dede:global.cfg_cmsurl/}/book_reqlist.php"><span>任务悬赏</span></a></li>
+      <li><a href="{dede:global.cfg_memberurl/}/content_list.php?channelid=17"><span>我的思维</span></a></li>
+      <!--
+      <li><a href="{dede:global.cfg_cmsurl/}/" class="on"><span>首页</span></a></li>
+      <li><a href="{dede:global.cfg_cmsurl/}/" class=""><span>浏览文档</span></a></li>
+      <li><a href="{dede:global.cfg_memberurl/}/" class=""><span>我的文档</span></a></li>
+    -->
+      <!--
+      <li class="item"><a href="{dede:global.cfg_memberurl/}" class=""><span>小组</span></a></li>
+      <li class="channel"> <a class="ulblock" href="#">频道
+        <table>
+          <tr>
+            <td><ul>
+                <li><span>·</span><a>社区</a></li>
+                <li><a href="{dede:global.cfg_memberurl/}" target="_blank"><span>·</span>校园</a></li>
+                <li><a href="{dede:global.cfg_memberurl/}" target="_blank"><span>·</span>PPT</a></li>
+                <li><a href="{dede:global.cfg_memberurl/}" class="" target="_blank"><span>·</span>API</a></li>
+              </ul></td>
+          </tr>
+        </table>
+        </a> </li>
+       -->
+      <li class="upload"><a href="{dede:global.cfg_memberurl/}/upload_book.php"><span>我要上传</span></a></li>
+    </ul>
+  </div>
+</div>
+

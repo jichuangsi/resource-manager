@@ -1,0 +1,623 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:xn="http://www.renren.com/2009/xnml" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>资源管理</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link href="/templets/2010_v1/style/common.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/index.css" rel="stylesheet" type="text/css" />
+<link href="/templets/2010_v1/style/reset.css" rel="stylesheet" type="text/css" />
+<!-- /公共js引用 开始 -->
+<script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="/include/dedeajax2.js"></script>
+<script language="javascript" type="text/javascript">
+function CheckLogin(){
+	var taget_obj = document.getElementById('_userlogin');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/member/ajax_loginsta.php");
+	DedeXHTTP = null;
+}
+jQuery().ready(function(){
+	CheckLogin();
+});
+</script>
+<!-- /公共js引用 结束-->
+<script language="javascript" type="text/javascript" src="/templets/2010_v1/js/jquery.marquee.js"></script>
+<script language="javascript" type="text/javascript" src="/templets/2010_v1/js/jcarousellite.js"></script>
+<script language="javascript" type="text/javascript">
+/**
+jQuery().ready(function(){
+	jQuery.ajax({
+		url: '/member/ajax_islogin.php',
+		success: function(data) {
+			if(data == "1"){
+				
+			}else{
+				jQuery("div .loginbox_new").show();	
+			}
+		}
+	});
+});
+*/
+</script>
+<script language="javascript" type="text/javascript">
+//取今日文档上传数
+function gettodaycount(){
+	//$("#todayuploadcount").html("213123")
+}
+//选项卡
+function setTab(n){
+	var tli=document.getElementById("menu").getElementsByTagName("li");
+	var mli=document.getElementById("l-content").getElementsByTagName("ul");
+	for(i=0;i<tli.length;i++){
+		tli[i].className=i==n?"hover":"";
+		mli[i].style.display=i==n?"block":"none";
+	}
+}
+
+$(document).ready(function() { 
+	gettodaycount();
+	$("#marquee").marquee({  
+            direction: "up",  
+            step: 1,  
+			speed:30,
+            pause: 5000  
+    }); 
+	$("#upUl").marquee({  
+            direction: "up",  
+            step: 1,  
+			speed:100,
+            pause: 0  
+    });
+	
+	$("#slideBar").jCarouselLite({
+		btnNext: "#next",
+		btnPrev: "#prev",
+		auto: 15000,
+		speed: 3000,
+		visible: 6,
+		scroll: 6
+	});
+	$("#l-content ul:first").addClass("block");
+});
+</script>
+</head>
+<body>
+<!-- /header 开始 -->
+<div id="head_k">
+  <div class="headBox">
+    <div class="logo_k" id="logo_common"><a href="/"><img src="/templets/2010_v1/images/doc_logo.png" alt="资源管理"/></a></div>
+    <div class="quick_link" id="_userlogin"> <a href="/member/login.php">登录</a> <a href="/member/index_do.php?fmdo=user&dopost=regnew">注册</a> <a href="/" target="_blank">常见问题</a> </div>
+    <ul id="nav">
+      <li><a href="/"><span>首页</span></a></li>
+      
+      <li><a href='/docs/' ><span>论文库</span></a></li>
+      
+	  <li><a href="/book_reqlist.php"><span>任务悬赏</span></a></li>
+      <li><a href="/member/content_list.php?channelid=17"><span>我的论文</span></a></li>
+      <!--
+      <li><a href="/" class="on"><span>首页</span></a></li>
+      <li><a href="/" class=""><span>浏览文档</span></a></li>
+      <li><a href="/member/" class=""><span>我的文档</span></a></li>
+    -->
+      <!--
+      <li class="item"><a href="/member" class=""><span>小组</span></a></li>
+      <li class="channel"> <a class="ulblock" href="#">频道
+        <table>
+          <tr>
+            <td><ul>
+                <li><span>·</span><a>社区</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>校园</a></li>
+                <li><a href="/member" target="_blank"><span>·</span>PPT</a></li>
+                <li><a href="/member" class="" target="_blank"><span>·</span>API</a></li>
+              </ul></td>
+          </tr>
+        </table>
+        </a> </li>
+       -->
+      <li class="upload"><a href="/member/upload_book.php"><span>我要上传</span></a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- /header 结束-->
+<!-- /search 开始 -->
+<form action="/plus/search.php" method="get">
+  <input type="hidden" name="kwtype" value="0" />
+  <!--input type="hidden" name="searchtype" value="titlekeyword" />-->
+  <div class="searchBox" id="searchBox">
+    <div class="searchNew">
+      <div class="searchbar">
+        <input id="topsearch" type="text" maxlength="100" class='listTopDefault' name="keyword" onkeydown="if(event.keyCode==13){ return searchNew()}"/>
+        <select id="searchtype" name="searchtype">
+        	<option value="title">文档标题</option>
+            <option value="writer">文档上传者</option>
+            <option value="tag">文档标签</option>
+        </select>
+        <input type="submit" class="btn" value="搜索" onclick="return searchNew();" />
+        <!--a href="/plus/heightsearch.php" title="高级">高级</a--> </div>
+    </div>
+  </div>
+</form>
+<!-- /search 结束-->
+<!--Real-time start-->
+<div id="Real-time" >
+  <div class="RT_title">
+    <div class="RT_l"><b>网站指数</b></div>
+    <div class="RT_m">
+      <ul>
+        <li class="price">文档浏览量↑</li>
+        <li class="num">文档下载量↑</li>
+        <li class="reg">注册用户数↑</li>
+        <li class="adddoc">新增文档↑</li>
+        <li class="adduser">有收入者↑</li>
+      </ul>
+    </div>
+    <div class="RT_r"></div>
+  </div>
+  <div id="marquee" class="clear">
+    <ul>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>今日新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>128次</div>
+            <div class='num'>2次</div>
+            <div class='reg'> 0人</div>
+            <div class='adddoc'>10篇</div>
+            <div class='adduser'> 0人</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>昨日新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>12次</div>
+            <div class='num'>2次</div>
+            <div class='reg'> 0人</div>
+            <div class='adddoc'>18篇</div>
+            <div class='adduser'> 0人</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>一月新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>255次</div>
+            <div class='num'>20次</div>
+            <div class='reg'>1人</div>
+            <div class='adddoc'>56篇</div>
+            <div class='adduser'> 0人</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>半年新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>255次</div>
+            <div class='num'>20次</div>
+            <div class='reg'>1人</div>
+            <div class='adddoc'>56篇</div>
+            <div class='adduser'> 0人</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+      <li>
+        <div class='RT_content'>
+          <div class='RT_m_l'>一年新增</div>
+          <div class='RT_m_m'>
+            <div class='price'>255次</div>
+            <div class='num'>20次</div>
+            <div class='reg'>1人</div>
+            <div class='adddoc'>56篇</div>
+            <div class='adduser'> 0人</div>
+          </div>
+          <div class='RT_m_r'></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="RT_end clear" ><img src="/templets/2010_v1/images/RT_end.gif" width="960" height="8" /></div>
+</div>
+<!--Real-time end-->
+<div class="content">
+  <!--left part-->
+  <div class="left">
+    <!--banner-->
+    <div class="banner" style="display: none;">
+      <div class="upload_tarea"> 今日上传<span class="amount" id="todayuploadcount"><script src="/plus/todaynewbooks.php" language="javascript"></script></span>份文档 <a href="/member/upload_book.php" class="upload"> </a> </div>
+    </div>
+    <!--banner end-->
+    <!--best document-->
+    <div class="best">
+      <div class="prev"><a href="javascript:;" id="prev"></a></div>
+      <div class="slider">
+        <div id="slideBar">
+          <ul>
+            <li> <a href="/docs/pinpaituiguang/2019/0415/263.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0415/259.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0415/256.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='excel测试.xls'></a>
+              <p>excel测试.xls</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0415/255.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='123.docx'></a>
+              <p>123.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0415/254.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='test.docx'></a>
+              <p>test.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/253.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='测试.doc'></a>
+              <p>测试.doc</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/252.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='测试.doc'></a>
+              <p>测试.doc</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/243.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/242.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='新建 Microsoft Office Word 2007 文档.docx'></a>
+              <p>新建 Microsoft Office Word 2007</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/241.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='新建 Microsoft Office Word 2007 文档.docx'></a>
+              <p>新建 Microsoft Office Word 2007</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/240.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/239.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='新建 Microsoft Office Word 2007 文档.docx'></a>
+              <p>新建 Microsoft Office Word 2007</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/238.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+<li> <a href="/docs/loushu_huace/2019/0414/236.html"><img src='/images/defaultpic.gif' border='0' width='70' height='86' alt='上传测试.docx'></a>
+              <p>上传测试.docx</p>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="next"><a href="javascript:;" id="next"></a> </div>
+      <div class="clear"></div>
+    </div>
+    <!--best document end-->
+<script src='/docshare/plus/ad_js.php?aid=1' language='javascript'></script>
+
+    <!--list-->
+    <div class="list_part">
+      <div class="title"><span class="t">最新文档</span><span  class="more"></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update red">2019-04-15</span> <a href="/docs/pinpaituiguang/2019/0415/263.html" class="docx" target="_blank">上传测试.docx</a></li>
+<li><span class="update red">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/259.html" class="docx" target="_blank">上传测试.docx</a></li>
+<li><span class="update red">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/256.html" class="xls" target="_blank">excel测试.xls</a></li>
+<li><span class="update red">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/255.html" class="docx" target="_blank">123.docx</a></li>
+<li><span class="update red">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/254.html" class="docx" target="_blank">test.docx</a></li>
+<li><span class="update red">2019-04-14</span> <a href="/docs/loushu_huace/2019/0414/253.html" class="doc" target="_blank">测试.doc</a></li>
+<li><span class="update red">2019-04-14</span> <a href="/docs/loushu_huace/2019/0414/252.html" class="doc" target="_blank">测试.doc</a></li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <!--栏目列表-->
+    <div class="list_part">
+      <div class="title"><span class="t">计算机论文</span><span  class="more"><a href="/docs/loushu_huace/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/259.html" class="docx" target="_blank">上传测试.docx</a></li>
+<li><span class="update">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/256.html" class="xls" target="_blank">excel测试.xls</a></li>
+<li><span class="update">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/255.html" class="docx" target="_blank">123.docx</a></li>
+<li><span class="update">2019-04-15</span> <a href="/docs/loushu_huace/2019/0415/254.html" class="docx" target="_blank">test.docx</a></li>
+<li><span class="update">2019-04-14</span> <a href="/docs/loushu_huace/2019/0414/253.html" class="doc" target="_blank">测试.doc</a></li>
+<li><span class="update">2019-04-14</span> <a href="/docs/loushu_huace/2019/0414/252.html" class="doc" target="_blank">测试.doc</a></li>
+<li><span class="update">2019-04-14</span> <a href="/docs/loushu_huace/2019/0414/243.html" class="docx" target="_blank">上传测试.docx</a></li>
+
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">电子类论文</span><span  class="more"><a href="/docs/shichangguihua/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2011-10-23</span> <a href="/docs/shichangguihua/2011/1023/189.html" class="xls" target="_blank">数据清单.xls</a></li>
+<li><span class="update">2011-10-23</span> <a href="/docs/shichangguihua/2011/1023/188.html" class="xls" target="_blank">排序.xls</a></li>
+<li><span class="update">2011-10-23</span> <a href="/docs/shichangguihua/2011/1023/184.html" class="doc" target="_blank">摘要.doc</a></li>
+<li><span class="update">2011-10-23</span> <a href="/docs/shichangguihua/2011/1023/182.html" class="doc" target="_blank">信息系统安全服务资质认证</a></li>
+
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">管理类论文</span><span  class="more"><a href="/docs/dichanyingxiao/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2011-10-23</span> <a href="/docs/dichanyingxiao/2011/1023/193.html" class="ppt" target="_blank">第8章 信息系统安全与职业</a></li>
+
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">计算机毕业设计</span><span  class="more"><a href="/docs/VI_sheji/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">电子类毕业设计</span><span  class="more"><a href="/docs/yuanlinguihua/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">开题报告</span><span  class="more"><a href="/docs/jingpinguanggaowenan/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2011-10-23</span> <a href="/docs/jingpinguanggaowenan/2011/1023/190.html" class="xls" target="_blank">用“绘图”工具栏.xls</a></li>
+
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">任务书审核表</span><span  class="more"><a href="/docs/pinpaituiguang/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">旅游类论文</span><span  class="more"><a href="/docs/pinpaituiguang/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2019-04-15</span> <a href="/docs/pinpaituiguang/2019/0415/263.html" class="docx" target="_blank">上传测试.docx</a></li>
+<li><span class="update">2011-10-27</span> <a href="/docs/pinpaituiguang/2011/1027/195.html" class="doc" target="_blank">毕业论文2.doc</a></li>
+<li><span class="update">2011-10-23</span> <a href="/docs/pinpaituiguang/2011/1023/191.html" class="doc" target="_blank">Word练习（一）.doc</a></li>
+
+        </ul>
+      </div>
+    </div><div class="list_part">
+      <div class="title"><span class="t">其他毕业论文</span><span  class="more"><a href="/docs/jiaoyuleilunwen/" target="_blank">更多>></a></span></div>
+      <div class="listContent_new">
+        <ul>
+          <li><span class="update">2011-11-08</span> <a href="/docs/jiaoyuleilunwen/2011/1108/205.html" class="doc" target="_blank">新建 Microsoft Word 文档 (2).</a></li>
+
+        </ul>
+      </div>
+    </div>
+     <!--栏目列表 end-->
+     
+    <div  class="clear"></div>
+    <!--list end-->
+    
+    <!--tips start-->
+    <div id="tips" style="margin-top:-8px;">
+      <a href="http://WWW.99LW.NET/"><img src="/images/2.jpg" width="680" height="92" border="0" /></a>
+    </div>
+    <!--tips end-->
+
+	
+	 
+     <!--links start-->
+    <div id="links">
+      <div class="tab">
+        <div class="tab_l"><img src="/templets/2010_v1/images/tab_l.gif" width="4" height="29" /></div>
+        <div class="tab_m">友情链接</div>
+        <div class="tab_r"><img src="/templets/2010_v1/images/tab_r.gif" width="4" height="29" /></div>
+      </div>
+      <div class="tab_c index_link">
+		<li><a href='http://www.jichuangsi.com' target='_blank'>题库</a> </li>
+	  </div>
+      <div class="tab_end"><img src="/templets/2010_v1/images/tab_end.gif" width="685" height="4" /></div>
+    </div>
+    <!--links end-->
+  </div>
+  <!--left part end-->
+  <!--right part-->
+  <div class="right">
+    <!--news start-->
+    <div id="news">
+      <div class="tab">
+        <div class="tab_l"><img src="/templets/2010_v1/images/tab_l.gif" width="4" height="29" /></div>
+        <div class="tab_m"><span><a href="list-mynews.php" target="_blank">更多>></a></span>公告</div>
+        <div class="tab_r"><img src="/templets/2010_v1/images/tab_r.gif" width="4" height="29" /></div>
+      </div>
+      <ul class="n_content">
+        <li><a href="mynews.php?aid=12">充值方式</a><li><a href="mynews.php?aid=11">上传须知</a><li><a href="mynews.php?aid=10">版权声明</a><li><a href="mynews.php?aid=9">免责声明</a><li><a href="mynews.php?aid=8">常见问题</a>
+      </ul>
+      <div class="n_end"><span></span></div>
+    </div>
+    <!--news end-->
+    <!--网站动态 start-->
+    <div id="zhike">
+      <div class="z_title">大家都在...</div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          <li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=263>上传测试.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=262>123.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=261>test.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=260>上传测试.docx</a></li><li><span class='blue'>admin</span>  成功发布了文档 <a href=/plus/view.php?aid=259>上传测试.docx</a></li><li><span class='blue'>admin</span>  成功发布了文档 <a href=/plus/view.php?aid=258>上传测试.docx</a></li><li><span class='blue'>admin</span>  成功发布了文档 <a href=/plus/view.php?aid=257>上传测试.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=256>excel测试.xls</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=255>123.docx</a></li><li><span class='blue'>admin</span>  成功发布了文档 <a href=/plus/view.php?aid=254>test.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=253>测试.doc</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=252>测试.doc</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=251>上传测试.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=250>test.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=249>test.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=248>测试.doc</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=247>上传测试.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=246>2019软件登记申请表.doc</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=245>上传测试.docx</a></li><li><span class='blue'>ASDF</span>  成功发布了文档 <a href=/plus/view.php?aid=244>上传测试.docx</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="/templets/2010_v1/images/z_end.gif"/></div>
+    </div>
+    <br />
+    <!--网站动态 end-->
+    
+    <!--最新悬赏任务-->
+    <div id="zhike" style="position:relative;">
+      <div class="z_title">最新悬赏<span style="position:relative; left:130px;"><a href="/member/book_request.php">更多>></a></span></div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          <li>【<a href="member/book_request_resp.php?reqid=59">点击投稿</a>】 <span class='blue'>admin</span> 发布了文档悬赏：亚运欢迎仪式，悬赏积分：<span style="color:#F00; font-weight:bold;">50</span></li><li>【<a href="member/book_request_resp.php?reqid=58">点击投稿</a>】 <span class='blue'>admin</span> 发布了文档悬赏：求文档我爱北京天安门，悬赏积分：<span style="color:#F00; font-weight:bold;">50</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="/templets/2010_v1/images/z_end.gif"/></div>
+    </div>
+    <br />
+    <!--最新悬赏任务 end-->
+    
+    <!--最新提现-->
+    <div id="zhike">
+      <div class="z_title">最新提现</div>
+      <div class="z_content">
+        <div id="upUl">
+          <ul class="doing"  >
+          <li><span class='blue'>safdasd</span>于[2011-10-23 18:16:57]申请提现人民币￥<span style="color:#F00; font-weight:bold;">2</span>，花费金币：2</li><li><span class='blue'>admin</span>于[2011-02-22 04:44:23]申请提现人民币￥<span style="color:#F00; font-weight:bold;">2</span>，花费金币：2</li><li><span class='blue'>admin</span>于[2010-10-30 16:16:36]申请提现人民币￥<span style="color:#F00; font-weight:bold;"></span>，花费金币：1</li>
+          </ul>
+        </div>
+      </div>
+      <div class="z_end"><img  src="/templets/2010_v1/images/z_end.gif"/></div>
+    </div>
+    <!--最新提现 end-->
+    
+    <!--下载排行-->
+    <div class="l-list" >
+      <div class="l-top" id="rotate">
+        <ul class="ui-tabs-nav" id="menu">
+          <li class="hover"><a href="javascript:setTab(0);" >日</a></li>
+          <li><a href="javascript:setTab(1);">周</a></li>
+          <li><a href="javascript:setTab(2);">月</a></li>
+        </ul>
+        文档阅读TOP10 </div>
+      <div class="l-content" style="*padding-top:0px;" id="l-content">
+        <ul id='fragment-1'>
+          
+          <li class='r1'><span class='top10'>1</span> <a title="test.docx" href="/docs/loushu_huace/2019/0415/254.html">test.docx</a> </li>
+
+          <li><span class='top10'>2</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0414/253.html">测试.doc</a> </li>
+
+          <li class='r1'><span class='top10'>3</span> <a title="上传测试.docx" href="/docs/loushu_huace/2019/0415/259.html">上传测试.docx</a> </li>
+
+          <li><span class='top10'>4</span> <a title="上传测试.docx" href="/docs/loushu_huace/2019/0414/236.html">上传测试.docx</a> </li>
+
+          <li class='r1'><span class='top10'>5</span> <a title="新建 Microsoft Office Word 2007 文档.do" href="/docs/loushu_huace/2019/0414/242.html">新建 Microsoft Office Word 2007 文档.do</a> </li>
+
+          <li><span class='top10'>6</span> <a title="上传测试.docx" href="/docs/loushu_huace/2019/0414/243.html">上传测试.docx</a> </li>
+
+        </ul>
+        <ul id='fragment-2' style='display:none;'>
+          
+          <li class='r1'><span class='top10'>1</span> <a title="test.docx" href="/docs/loushu_huace/2019/0415/254.html">test.docx</a> </li>
+
+          <li><span class='top10'>2</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0412/229.html">测试.doc</a> </li>
+
+          <li class='r1'><span class='top10'>3</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0414/253.html">测试.doc</a> </li>
+
+          <li><span class='top10'>4</span> <a title="上传测试.docx" href="/docs/loushu_huace/2019/0408/213.html">上传测试.docx</a> </li>
+
+          <li class='r1'><span class='top10'>5</span> <a title="test.docx" href="/docs/loushu_huace/2019/0412/235.html">test.docx</a> </li>
+
+          <li><span class='top10'>6</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0412/233.html">测试.doc</a> </li>
+
+        </ul>
+        <ul id='fragment-3' style='display:none;'>
+          
+          <li class='r1'><span class='top10'>1</span> <a title="test.docx" href="/docs/loushu_huace/2019/0415/254.html">test.docx</a> </li>
+
+          <li><span class='top10'>2</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0412/229.html">测试.doc</a> </li>
+
+          <li class='r1'><span class='top10'>3</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0414/253.html">测试.doc</a> </li>
+
+          <li><span class='top10'>4</span> <a title="上传测试.docx" href="/docs/loushu_huace/2019/0408/213.html">上传测试.docx</a> </li>
+
+          <li class='r1'><span class='top10'>5</span> <a title="test.docx" href="/docs/loushu_huace/2019/0412/235.html">test.docx</a> </li>
+
+          <li><span class='top10'>6</span> <a title="测试.doc" href="/docs/loushu_huace/2019/0412/233.html">测试.doc</a> </li>
+
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--下载排行 end-->
+    <!--赚钱排行-->
+    <div class="l-list">
+      <div class="l-top"> 会员积分排行 </div>
+      <div class="l-content">
+        <div class="m-title"><span class='topName'>用户名</span><span class='all'>文档数</span><span class="sy">总积分</span></div>
+        <ul id="moneyTop">
+       
+          <li class='r1'><span class='top10'>1</span>
+    <a href='/member/index.php?uid=hgfjdk' class='topName' target='_blank'>风飘</a> <span class='all'> 0</span> <span class='red'>1254</span></li>
+          <li><span class='top10'>2</span>
+    <a href='/member/index.php?uid=tanyu' class='topName' target='_blank'>心酸</a> <span class='all'> 0</span> <span class='red'>650</span></li>
+          <li class='r1'><span class='top10'>3</span>
+    <a href='/member/index.php?uid=ASDF' class='topName' target='_blank'>ASDF</a> <span class='all'>47</span> <span class='red'>604</span></li>
+          <li><span class='top10'>4</span>
+    <a href='/member/index.php?uid=天空记忆' class='topName' target='_blank'>天空记忆</a> <span class='all'> 0</span> <span class='red'>468</span></li>
+          <li class='r1'><span class='top10'>5</span>
+    <a href='/member/index.php?uid=6268862' class='topName' target='_blank'>郑辉</a> <span class='all'> 0</span> <span class='red'>340</span></li>
+          <li><span class='top10'>6</span>
+    <a href='/member/index.php?uid=zhangyunzhou' class='topName' target='_blank'>大千</a> <span class='all'> 0</span> <span class='red'>336</span></li>
+          <li class='r1'><span class='top10'>7</span>
+    <a href='/member/index.php?uid=sflying' class='topName' target='_blank'>笑世一郎</a> <span class='all'> 0</span> <span class='red'>290</span></li>
+          <li><span class='top10'>8</span>
+    <a href='/member/index.php?uid=hewei2010' class='topName' target='_blank'>hewei2010</a> <span class='all'> 0</span> <span class='red'>270</span></li>
+          <li class='r1'><span class='top10'>9</span>
+    <a href='/member/index.php?uid=admin' class='topName' target='_blank'>admin</a> <span class='all'>17</span> <span class='red'>245</span></li>
+          <li><span class='top10'>10</span>
+    <a href='/member/index.php?uid=wisageteche' class='topName' target='_blank'>wisageteche</a> <span class='all'> 0</span> <span class='red'>240</span></li>
+        </ul>
+      </div>
+      <div class="l-end"></div>
+    </div>
+    <!--赚钱排行 end-->
+
+  </div>
+  <!--right part end-->
+  <div class="clear"></div>
+</div>
+<!-- /foot 开始 -->
+<!-- //底部模板 -->
+
+<div id="foot_k" style="display: none;">
+  <ul>
+    <li>
+      <dl>
+        <dt>关于我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>使用须知</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>99论文</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>联系我们</dt>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>论文定制</dt>
+      </dl>
+    </li>
+     <li>
+      <dl>
+        <dt>版权申述</dt>
+      </dl>
+    </li>
+  </ul>
+  <p class="copy" >©2005-2011 www.99lw.net Inc. All Rights Reserved </p> 
+
+  <script type="text/javascript" src="/twatch_log.js"></script>
+</div>
+
+<!-- /foot 结束-->
+</body>
+</html>

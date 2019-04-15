@@ -1,0 +1,1 @@
+<li><span class="update">[field:pubdate function="GetDateMk(@me)"/]</span> <a href="[field:arcurl/]" target="_blank" class="[field:filetype/]">[field:title/]</a></li>
